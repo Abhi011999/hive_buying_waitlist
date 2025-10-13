@@ -23,14 +23,10 @@ export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
       <Container style={container}>
         <Img
           src={`https://hivebuying.com/hive-logo.png`}
-          width="220"
-          height="100"
+          width="320"
           alt="HiveBuying"
           style={logo}
         />
-        <Heading as="h1" style={heading}>
-          Waitlist
-        </Heading>
         <Text style={greeting}>Hi there,</Text>
         <Text style={paragraph}>
           Thanks for being awesome!
@@ -69,7 +65,7 @@ NotionWaitlistEmail.PreviewProps = {
 export default NotionWaitlistEmail;
 
 const main = {
-  background: "linear-gradient(-225deg, #FFE29F 0%, #FFA99F 48%, #FF719A 100%)",
+  background: "#000000",
   fontFamily: 'figtree, "Helvetica Neue", Helvetica, Arial, sans-serif',
   padding: "40px 0",
   color: "#cccccc",
@@ -78,7 +74,7 @@ const main = {
 const container = {
   margin: "0 auto",
   padding: "24px 32px 48px",
-  backgroundColor: "#1a1a1a",
+  backgroundColor: "#000000",
   borderRadius: "12px",
   boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
   maxWidth: "600px",
