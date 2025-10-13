@@ -39,7 +39,7 @@ export async function POST(request: NextRequest, response: NextResponse) {
     from: "HiveBuying<hello@hivebuying.com>",
     to: [email],
     subject: "Welcome to HiveBuying - Thanks for being awesome!",
-    reply_to: "namanworks7@gmail.com",
+    reply_to: "hivebuying@gmail.com",
     html:  await render(WelcomeTemplate({ userFirstname: "" })),
   });
 

@@ -9,7 +9,7 @@ const FigtreeFont = Figtree({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "HiveBuying — Join the Waitlist",
   description:
-    "Join the HiveBuying waitlist and be the first to experience the future of group buying. Get early access and exclusive updates.",
+    "Team Up, Pay Less!",
 };
 
 export default function RootLayout({
