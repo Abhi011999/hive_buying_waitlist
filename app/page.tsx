@@ -4,22 +4,15 @@ import { toast } from "sonner";
 import { useState } from "react";
 import CTA from "@/components/cta";
 import Form from "@/components/form";
-import Logos from "@/components/logos";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
-import Footer from "@/components/footer";
 
 export default function Home() {
-  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
-  };
-
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
   };
 
   const isValidEmail = (email: string) => {
@@ -28,8 +21,8 @@ export default function Home() {
   };
 
   const handleSubmit = async () => {
-    if (!name || !email) {
-      toast.error("Please fill in all fields 😠");
+    if (!email) {
+      toast.error("Please enter your email 😠");
       return;
     }
 
@@ -49,7 +42,7 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ firstname: name, email }),
+          body: JSON.stringify({ email }),
         });
 
         if (!mailResponse.ok) {
@@ -67,7 +60,7 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, email }),
+          body: JSON.stringify({ email }),
         });
 
         if (!notionResponse.ok) {
@@ -77,7 +70,7 @@ export default function Home() {
             reject("Notion insertion failed");
           }
         } else {
-          resolve({ name });
+          resolve({});
         }
       } catch (error) {
         reject(error);
@@ -87,7 +80,6 @@ export default function Home() {
     toast.promise(promise, {
       loading: "Getting you on the waitlist... 🚀",
       success: (data) => {
-        setName("");
         setEmail("");
         return "Thank you for joining the waitlist 🎉";
       },
@@ -109,31 +101,25 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center overflow-x-clip pt-12 md:pt-24">
+    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip">
       <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
         <Header />
 
         <CTA />
 
         <Form
-          name={name}
           email={email}
-          handleNameChange={handleNameChange}
           handleEmailChange={handleEmailChange}
           handleSubmit={handleSubmit}
           loading={loading}
         />
-
-        <Logos />
       </section>
-
-      <Footer />
 
       <Particles
         quantityDesktop={350}
         quantityMobile={100}
         ease={80}
-        color={"#F7FF9B"}
+        color={"#000000"}
         refresh
       />
     </main>

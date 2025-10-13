@@ -7,12 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
 import { Ratelimit } from "@upstash/ratelimit";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
-
-const redis = new Redis({
-  url: process.env.UPSTASH_REDIS_REST_URL,
-  token: process.env.UPSTASH_REDIS_REST_TOKEN,
-});
+const redis = Redis.fromEnv();
 
 const ratelimit = new Ratelimit({
   redis,
@@ -21,6 +16,8 @@ const ratelimit = new Ratelimit({
 });
 
 export async function POST(request: NextRequest, response: NextResponse) {
+  const resend = new Resend(process.env.RESEND_API_KEY);
+  
   const ip = request.ip ?? "127.0.0.1";
 
   const result = await ratelimit.limit(ip);
@@ -36,14 +33,14 @@ export async function POST(request: NextRequest, response: NextResponse) {
     );
   }
 
-  const { email, firstname } = await request.json();
+  const { email } = await request.json();
 
   const { data, error } = await resend.emails.send({
-    from: "Lakshay<hello@waitlist.lakshb.dev>",
+    from: "HiveBuying<hello@hivebuying.com>",
     to: [email],
-    subject: "Thankyou for wailisting the Next.js + Notion CMS template!",
-    reply_to: "lakshb.work@gmail.com",
-    html:  await render(WelcomeTemplate({ userFirstname: firstname })),
+    subject: "Welcome to HiveBuying - Thanks for being awesome!",
+    reply_to: "namanworks7@gmail.com",
+    html:  await render(WelcomeTemplate({ userFirstname: "" })),
   });
 
   // const { data, error } = { data: true, error: null }

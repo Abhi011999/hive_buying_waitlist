@@ -12,8 +12,8 @@ export default function CTA() {
       animate="visible">
       <motion.div variants={itemVariants}>
         <div className="flex items-center justify-center">
-          <div className="flex w-fit items-center justify-center rounded-full bg-muted/80 text-center">
-            <AnimatedShinyText className="px-4 py-1">
+          <div className="flex w-fit items-center justify-center rounded-full border border-black/20 bg-black/5 text-center">
+            <AnimatedShinyText className="px-4 py-1 text-black/20">
               <span>Coming soon!</span>
             </AnimatedShinyText>
           </div>
@@ -21,23 +21,23 @@ export default function CTA() {
       </motion.div>
 
       <motion.img
-        src="/logo.svg"
-        alt="logo"
-        className="mx-auto h-24 w-24"
+        src="/hive-icon.svg"
+        alt="HiveBuying logo"
+        className="mx-auto h-32 w-32 sm:h-48 sm:w-48"
         variants={itemVariants}
       />
 
       <motion.div variants={itemVariants}>
         <TextBlur
           className="text-center text-3xl font-medium tracking-tighter sm:text-5xl"
-          text="A Simple Next.js Waitlist Template with Notion as CMS"
+          text="HiveBuying - Team Up, Pay Less!"
         />
       </motion.div>
 
       <motion.div variants={itemVariants}>
         <TextBlur
-          className="mx-auto max-w-[27rem] pt-1.5 text-center text-base text-zinc-300 sm:text-lg"
-          text="Join the waitlist to get early access of the product and recieve updates on the progress!"
+          className="mx-auto max-w-[38rem] pt-1.5 text-center text-base sm:text-lg"
+          text="The price of anything changes when people come together. Join HiveBuying today, form groups, buy smart, pay less together."
           duration={0.8}
         />
       </motion.div>

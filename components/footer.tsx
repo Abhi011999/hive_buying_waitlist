@@ -15,7 +15,7 @@ export default function Footer() {
           href="https://lakshb.dev"
           rel="noopener noreferrer"
           target="_blank">
-          <span className="text-zinc-300 underline underline-offset-2 transition-all duration-200 ease-linear hover:text-yellow-200">
+          <span className="text-zinc-300 underline underline-offset-2 transition-all duration-200 ease-linear hover:text-black">
             lakshaybhushan
           </span>
           .

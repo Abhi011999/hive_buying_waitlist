@@ -17,7 +17,7 @@ interface EmailProps {
 export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
   <Html>
     <Head />
-    <Preview>Thanks for Joining the Waitlist, {userFirstname}! 🎉</Preview>
+    <Preview>Thanks for Joining the Waitlist! 🎉</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
@@ -27,7 +27,7 @@ export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
           alt="Notion Waitlist Logo"
           style={logo}
         />
-        <Text style={greeting}>Hi {userFirstname},</Text>
+        <Text style={greeting}>Hi there,</Text>
         <Text style={paragraph}>
           Thanks for joining the waitlist for our Next.js + Notion CMS waitlist
           template! I'm Lakshay, the developer behind this project. I'm glad to
@@ -43,9 +43,9 @@ export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
           — I'm here to listen!
         </Text>
         <Text style={paragraph}>
-          You can also follow me on X/Twitter for updates:{" "}
-          <a href="https://x.com/blakssh" style={link}>
-            @blakssh
+          You can also reach out via WhatsApp for updates:{" "}
+          <a href="https://wa.link/psnvgp" style={link}>
+            +91 902 668 4646
           </a>
         </Text>
         <Text style={signOff}>
