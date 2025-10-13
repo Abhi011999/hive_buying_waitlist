@@ -2,6 +2,7 @@ import {
   Body,
   Container,
   Head,
+  Heading,
   Hr,
   Html,
   Img,
@@ -17,30 +18,33 @@ interface EmailProps {
 export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
   <Html>
     <Head />
-    <Preview>Thanks for Joining the Waitlist! 🎉</Preview>
+    <Preview>Welcome to the Hive! 🖤</Preview>
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`https://nextjs-notion-waitlist.vercel.app/waitlist-logo.png`}
+          src={`https://hivebuying.com/waitlist-logo.png`}
           width="220"
           height="100"
-          alt="Notion Waitlist Logo"
+          alt="HiveBuying"
           style={logo}
         />
+        <Heading as="h1" style={heading}>
+          Waitlist
+        </Heading>
         <Text style={greeting}>Hi there,</Text>
         <Text style={paragraph}>
-          Thanks for joining the waitlist for our Next.js + Notion CMS waitlist
-          template! I'm Lakshay, the developer behind this project. I'm glad to
-          have you on board.
+          Thanks for being awesome!
         </Text>
         <Text style={paragraph}>
-          I'll keep you posted on the progress and notify you as soon as it's
-          ready for you to use. In the meantime, if you have any questions or
-          feedback, don't hesitate to reach out by replying directly to{" "}
-          <a href="mailto:lakshb.work@gmail.com" style={link}>
-            this email {""}
-          </a>
-          — I'm here to listen!
+          You're now part of the first community that believes buying together means getting fair prices and making smarter choices as one.
+        </Text>
+        <Text style={paragraph}>
+          Thanks for being early. The Hive is forming and you're part of it. 💛
+        </Text>
+        <Text style={signOff}>
+          Best,
+          <br />
+          The HiveBuying Team
         </Text>
         <Text style={paragraph}>
           You can also reach out via WhatsApp for updates:{" "}
@@ -48,14 +52,9 @@ export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
             +91 902 668 4646
           </a>
         </Text>
-        <Text style={signOff}>
-          Best regards,
-          <br />
-          Lakshay
-        </Text>
         <Hr style={hr} />
         <Text style={footer}>
-          You received this email because you signed up for the Notion waitlist.
+          © 2025 HiveBuying. You received this email because you joined our waitlist.
           If you believe this is a mistake, feel free to ignore this email.
         </Text>
       </Container>
@@ -88,6 +87,15 @@ const container = {
 const logo = {
   margin: "0 auto",
   paddingBottom: "20px",
+};
+
+const heading = {
+  fontSize: "24px",
+  fontWeight: "bold",
+  textAlign: "center" as const,
+  color: "#ffffff",
+  marginBottom: "24px",
+  marginTop: "0",
 };
 
 const greeting = {

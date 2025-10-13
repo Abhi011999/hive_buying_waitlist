@@ -14,7 +14,7 @@ export default function CTA() {
         <div className="flex items-center justify-center">
           <div className="flex w-fit items-center justify-center rounded-full border border-black/20 bg-black/5 text-center">
             <AnimatedShinyText className="px-4 py-1 text-black/20">
-              <span>Coming soon!</span>
+              <span>Launching soon!</span>
             </AnimatedShinyText>
           </div>
         </div>
