@@ -1,7 +1,5 @@
-import Link from "next/link";
 import { ChangeEvent } from "react";
 import { motion } from "framer-motion";
-import { FaWhatsapp } from "react-icons/fa6";
 import { Input } from "@/components/ui/input";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
@@ -22,7 +20,7 @@ export default function Form({
 }: FormProps) {
   return (
     <motion.div
-      className="mt-6 flex w-full max-w-[24rem] flex-col gap-2"
+      className="mt-4 flex w-full max-w-[20rem] sm:mt-6 sm:max-w-[24rem] flex-col gap-1.5 sm:gap-2"
       variants={containerVariants}
       initial="hidden"
       animate="visible">
@@ -32,6 +30,7 @@ export default function Form({
           placeholder="Your Email Address"
           value={email}
           onChange={handleEmailChange}
+          className="h-10 text-sm sm:h-11 sm:text-base"
         />
       </motion.div>
       <motion.div variants={itemVariants}>
@@ -40,21 +39,10 @@ export default function Form({
           Icon={FaArrowRightLong}
           onClick={handleSubmit}
           iconPlacement="right"
-          className="mt-2 w-full"
+          className="mt-1 h-10 text-sm sm:mt-2 sm:h-11 sm:text-base w-full"
           disabled={loading}>
-          {loading ? "Loading..." : "Join Waitlist!"}
+          {loading ? "Loading..." : "Join Waitlist Now!"}
         </EnhancedButton>
-      </motion.div>
-      <motion.div
-        variants={itemVariants}
-        className="mt-4 flex w-full items-center justify-center gap-1 text-muted-foreground">
-        <p>For any queries, reach out at </p>
-        <Link
-          href="https://wa.link/psnvgp"
-          rel="noopener noreferrer"
-          target="_blank">
-          <FaWhatsapp className="h-5 w-5 transition-all duration-200 ease-linear hover:text-black" />
-        </Link>
       </motion.div>
     </motion.div>
   );

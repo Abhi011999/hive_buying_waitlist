@@ -1,11 +1,16 @@
 "use client";
 
+import Link from "next/link";
 import { toast } from "sonner";
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { FaWhatsapp } from "react-icons/fa6";
 import CTA from "@/components/cta";
 import Form from "@/components/form";
+import HowItWorks from "@/components/how-it-works";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
+import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function Home() {
   const [email, setEmail] = useState<string>("");
@@ -101,8 +106,8 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip">
-      <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8">
+    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip py-8 sm:py-0">
+      <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8 gap-y-4 sm:gap-y-0">
         <Header />
 
         <CTA />
@@ -113,6 +118,27 @@ export default function Home() {
           handleSubmit={handleSubmit}
           loading={loading}
         />
+
+        <HowItWorks />
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-4 sm:mt-6"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-center gap-1 text-xs sm:text-sm text-muted-foreground">
+            <p>For any queries, reach out at </p>
+            <Link
+              href="https://wa.link/psnvgp"
+              rel="noopener noreferrer"
+              target="_blank">
+              <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5 transition-all duration-200 ease-linear hover:text-black" />
+            </Link>
+          </motion.div>
+        </motion.div>
       </section>
 
       <Particles
