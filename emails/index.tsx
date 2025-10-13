@@ -22,7 +22,7 @@ export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
     <Body style={main}>
       <Container style={container}>
         <Img
-          src={`https://hivebuying.com/waitlist-logo.png`}
+          src={`https://hivebuying.com/hive-logo.png`}
           width="220"
           height="100"
           alt="HiveBuying"
