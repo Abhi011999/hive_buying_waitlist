@@ -16,6 +16,25 @@ export default function Home() {
   const [email, setEmail] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
+  const users = [
+    {
+      id: 1,
+      image: "/face-1.png",
+    },
+    {
+      id: 2,
+      image: "/face-2.jpeg",
+    },
+    {
+      id: 3,
+      image: "/face-3.png",
+    },
+    {
+      id: 4,
+      image: "/face-4.png",
+    },
+  ];
+
   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(event.target.value);
   };
@@ -119,7 +138,48 @@ export default function Home() {
           loading={loading}
         />
 
-        <HowItWorks />
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-6 sm:mt-8"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="flex flex-row items-center justify-center mb-1 gap-1"
+          >
+            {users.map((user, idx) => (
+              <img
+                key={user.id}
+                src={user.image}
+                alt={`User ${user.id}`}
+                className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-white object-cover -ml-2 first:ml-0"
+              />
+            ))}
+          </motion.div>
+        </motion.div>
+
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          className="mt-1 sm:mt-1.5"
+        >
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-center"
+          >
+            <div className="flex w-fit items-center justify-center rounded-full border border-black-200 bg-transparent text-center">
+              <div className="px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium">
+                🎉 727+ users already joined
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+
+        <div className="mt-6 sm:mt-8">
+          <HowItWorks />
+        </div>
 
         <motion.div
           variants={containerVariants}
