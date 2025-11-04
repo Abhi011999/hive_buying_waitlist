@@ -10,6 +10,7 @@ import Form from "@/components/form";
 import HowItWorks from "@/components/how-it-works";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function Home() {
@@ -126,7 +127,7 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip py-8 sm:py-0">
-      <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8 gap-y-4 sm:gap-y-0">
+      <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8 gap-y-4 sm:gap-y-0 mt-12 sm:mt-16">
         <Header />
 
         <CTA />
@@ -171,7 +172,7 @@ export default function Home() {
           >
             <div className="flex w-fit items-center justify-center rounded-full border border-black-200 bg-transparent text-center">
               <div className="px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium">
-                🎉 727+ users already joined
+                🎉 901+ users already joined
               </div>
             </div>
           </motion.div>
@@ -185,7 +186,7 @@ export default function Home() {
           variants={containerVariants}
           initial="hidden"
           animate="visible"
-          className="mt-4 sm:mt-6"
+          className="mt-4 sm:mt-6 mb-12 sm:mb-16"
         >
           <motion.div
             variants={itemVariants}
@@ -208,6 +209,8 @@ export default function Home() {
         color={"#000000"}
         refresh
       />
+
+      <Footer />
     </main>
   );
 }
