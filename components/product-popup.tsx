@@ -81,11 +81,11 @@ export function ProductPopup({ open, onOpenChange, productName }: ProductPopupPr
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-[425px] max-h-[90vh] overflow-y-auto sm:overflow-y-visible sm:max-h-none !top-4 sm:!top-[50%] !translate-y-0 sm:!translate-y-[-50%] m-4 sm:m-0">
+      <DialogContent className="!w-[calc(100vw-2rem)] max-w-[380px] sm:max-w-[425px] max-h-[90vh] overflow-y-auto sm:overflow-y-visible sm:max-h-none !top-4 sm:!top-[50%] !translate-y-0 sm:!translate-y-[-50%]">
         <DialogHeader>
           <DialogTitle>Team up to buy</DialogTitle>
           <DialogDescription>
-            Share your details and we'll connect you with others interested in this product.
+            Share your details and we'll connect you with others interested in similar products.
           </DialogDescription>
         </DialogHeader>
 
