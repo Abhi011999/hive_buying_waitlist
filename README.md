@@ -11,7 +11,7 @@
 
 </p>
 
-![GithubBanner](./app/opengraph-image.png)
+![GithubBanner](./app/opengraph-image.webp)
 
 This is a template repository for creating a waitlist using Next.js 14, Notion as a CMS, Upstash Redis for rate limiting and Resend for sending emails with a custom domain.
 
@@ -21,7 +21,7 @@ The UI is built using a mix of shadcn/ui, Magic UI and Tailwind CSS.
 
 **Sample Database** ([Link](https://lakshaybhushan.notion.site/15e45b25609e80408f83ebb97b45882b?v=c949c24dff4a42b3baa31bfb3e8a3354))
 <a href="https://lakshaybhushan.notion.site/15e45b25609e80408f83ebb97b45882b?v=c949c24dff4a42b3baa31bfb3e8a3354" target="_blank" rel="noopener noreferrer">
- <img src ="./public/sample-db.png">
+ <img src ="./public/sample-db.webp">
 </a>
 
 ## Features

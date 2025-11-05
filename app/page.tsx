@@ -23,19 +23,19 @@ export default function Home() {
   const users = [
     {
       id: 1,
-      image: "/face-1.png",
+      image: "/face-1.webp",
     },
     {
       id: 2,
-      image: "/face-2.jpeg",
+      image: "/face-2.webp",
     },
     {
       id: 3,
-      image: "/face-3.png",
+      image: "/face-3.webp",
     },
     {
       id: 4,
-      image: "/face-4.png",
+      image: "/face-4.webp",
     },
   ];
 
