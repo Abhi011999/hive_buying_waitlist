@@ -11,10 +11,13 @@ import HowItWorks from "@/components/how-it-works";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { PopularProducts } from "@/components/popular-products";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function Home() {
-  const [email, setEmail] = useState<string>("");
+  const [name, setName] = useState<string>("");
+  const [mobile, setMobile] = useState<string>("");
+  const [product, setProduct] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
 
   const users = [
@@ -36,23 +39,32 @@ export default function Home() {
     },
   ];
 
-  const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(event.target.value);
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
   };
 
-  const isValidEmail = (email: string) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
+  const handleMobileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const value = event.target.value.replace(/\D/g, "").slice(0, 10);
+    setMobile(value);
+  };
+
+  const handleProductChange = (value: string) => {
+    setProduct(value);
   };
 
   const handleSubmit = async () => {
-    if (!email) {
-      toast.error("Please enter your email 😠");
+    if (!name) {
+      toast.error("Please enter your name 😠");
       return;
     }
 
-    if (!isValidEmail(email)) {
-      toast.error("Please enter a valid email address 😠");
+    if (!mobile) {
+      toast.error("Please enter your mobile number 😠");
+      return;
+    }
+
+    if (!product) {
+      toast.error("Please select a product category 😠");
       return;
     }
 
@@ -60,39 +72,19 @@ export default function Home() {
 
     const promise = new Promise(async (resolve, reject) => {
       try {
-        // First, attempt to send the email
-        const mailResponse = await fetch("/api/mail", {
-          cache: "no-store",
+        const response = await fetch("/api/notion/popup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ email }),
+          body: JSON.stringify({ name, mobile, product }),
         });
 
-        if (!mailResponse.ok) {
-          if (mailResponse.status === 429) {
+        if (!response.ok) {
+          if (response.status === 429) {
             reject("Rate limited");
           } else {
-            reject("Email sending failed");
-          }
-          return; // Exit the promise early if mail sending fails
-        }
-
-        // If email sending is successful, proceed to insert into Notion
-        const notionResponse = await fetch("/api/notion", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email }),
-        });
-
-        if (!notionResponse.ok) {
-          if (notionResponse.status === 429) {
-            reject("Rate limited");
-          } else {
-            reject("Notion insertion failed");
+            reject("Submission failed");
           }
         } else {
           resolve({});
@@ -103,17 +95,17 @@ export default function Home() {
     });
 
     toast.promise(promise, {
-      loading: "Getting you on the waitlist... 🚀",
+      loading: "Submitting your details... 🚀",
       success: (data) => {
-        setEmail("");
-        return "Thank you for joining the waitlist 🎉";
+        setName("");
+        setMobile("");
+        setProduct("");
+        return "Thanks! We'll reach out soon 🎉";
       },
       error: (error) => {
         if (error === "Rate limited") {
           return "You're doing that too much. Please try again later";
-        } else if (error === "Email sending failed") {
-          return "Failed to send email. Please try again 😢.";
-        } else if (error === "Notion insertion failed") {
+        } else if (error === "Submission failed") {
           return "Failed to save your details. Please try again 😢.";
         }
         return "An error occurred. Please try again 😢.";
@@ -133,8 +125,12 @@ export default function Home() {
         <CTA />
 
         <Form
-          email={email}
-          handleEmailChange={handleEmailChange}
+          name={name}
+          mobile={mobile}
+          product={product}
+          handleNameChange={handleNameChange}
+          handleMobileChange={handleMobileChange}
+          handleProductChange={handleProductChange}
           handleSubmit={handleSubmit}
           loading={loading}
         />
@@ -172,15 +168,11 @@ export default function Home() {
           >
             <div className="flex w-fit items-center justify-center rounded-full border border-black-200 bg-transparent text-center">
               <div className="px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium">
-                🎉 901+ users already joined
+                🎉 2309+ users already joined
               </div>
             </div>
           </motion.div>
         </motion.div>
-
-        <div className="mt-6 sm:mt-8">
-          <HowItWorks />
-        </div>
 
         <motion.div
           variants={containerVariants}
@@ -201,6 +193,12 @@ export default function Home() {
           </motion.div>
         </motion.div>
       </section>
+
+      <PopularProducts />
+
+      <div className="mt-6 sm:mt-8 mb-12 sm:mb-16">
+        <HowItWorks />
+      </div>
 
       <Particles
         quantityDesktop={350}

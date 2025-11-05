@@ -3,18 +3,42 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { EnhancedButton } from "@/components/ui/enhanced-btn";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 interface FormProps {
-  email: string;
-  handleEmailChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  name: string;
+  mobile: string;
+  product: string;
+  handleNameChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleMobileChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleProductChange: (value: string) => void;
   handleSubmit: () => void;
   loading: boolean;
 }
 
+const productCategories = [
+  "Phones",
+  "Laptops/Ipads",
+  "Gadgets",
+  "Scooty/Bike",
+  "Cars",
+  "Others",
+];
+
 export default function Form({
-  email,
-  handleEmailChange,
+  name,
+  mobile,
+  product,
+  handleNameChange,
+  handleMobileChange,
+  handleProductChange,
   handleSubmit,
   loading,
 }: FormProps) {
@@ -26,12 +50,36 @@ export default function Form({
       animate="visible">
       <motion.div variants={itemVariants}>
         <Input
-          type="email"
-          placeholder="Your Email Address"
-          value={email}
-          onChange={handleEmailChange}
+          type="text"
+          placeholder="Your Name"
+          value={name}
+          onChange={handleNameChange}
           className="h-10 text-sm sm:h-11 sm:text-base"
         />
+      </motion.div>
+      <motion.div variants={itemVariants}>
+        <Input
+          type="tel"
+          placeholder="Mobile Number"
+          value={mobile}
+          onChange={handleMobileChange}
+          maxLength={10}
+          className="h-10 text-sm sm:h-11 sm:text-base"
+        />
+      </motion.div>
+      <motion.div variants={itemVariants}>
+        <Select value={product} onValueChange={handleProductChange} disabled={loading}>
+          <SelectTrigger className="h-10 text-sm sm:h-11 sm:text-base">
+            <SelectValue placeholder="Select Product Category" />
+          </SelectTrigger>
+          <SelectContent>
+            {productCategories.map((category) => (
+              <SelectItem key={category} value={category}>
+                {category}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </motion.div>
       <motion.div variants={itemVariants}>
         <EnhancedButton
@@ -41,7 +89,7 @@ export default function Form({
           iconPlacement="right"
           className="mt-1 h-10 text-sm sm:mt-2 sm:h-11 sm:text-base w-full"
           disabled={loading}>
-          {loading ? "Loading..." : "Join Waitlist Now!"}
+          {loading ? "Submitting..." : "Join for Updates & Group Buys"}
         </EnhancedButton>
       </motion.div>
     </motion.div>

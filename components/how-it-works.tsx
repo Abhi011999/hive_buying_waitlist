@@ -33,7 +33,7 @@ export default function HowItWorks() {
     >
       <motion.h2 
         variants={itemVariants}
-        className="mb-6 text-center text-xl font-semibold tracking-tight sm:text-2xl"
+        className="mb-6 text-center text-4xl font-semibold tracking-tight sm:text-5xl"
       >
         How It Works
       </motion.h2>
