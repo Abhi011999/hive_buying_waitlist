@@ -82,7 +82,7 @@ export function PopularProducts() {
                 >
                   {/* Product Card */}
                   <div 
-                    className="w-full max-w-sm h-64 bg-black border border-border rounded-xl overflow-hidden hover:border-primary transition-colors group cursor-pointer relative"
+                    className="w-full max-w-sm h-80 sm:h-64 bg-black border border-border rounded-xl overflow-hidden hover:border-primary transition-colors group cursor-pointer relative"
                     onClick={() => setSelectedProduct(product.name)}
                   >
                     {product.hasImage ? (
