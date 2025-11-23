@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { RowsPhotoAlbum } from "react-photo-album";
 import "react-photo-album/rows.css";
 
@@ -30,6 +31,18 @@ const photos = [
     alt: "Brand collaboration 4",
   },
   {
+    src: "/gallery/WhatsApp Image 2025-11-22 at 10.58.17 PM (2).webp",
+    width: 1206,
+    height: 689,
+    alt: "Brand collaboration 30",
+  },
+  {
+    src: "/gallery/WhatsApp Image 2025-11-22 at 10.58.43 PM (1).webp",
+    width: 914,
+    height: 637,
+    alt: "Brand collaboration 31",
+  },
+  {
     src: "/gallery/IMG_6618.webp",
     width: 8064,
     height: 4536,
@@ -40,6 +53,18 @@ const photos = [
     width: 3209,
     height: 3973,
     alt: "Brand collaboration 6",
+  },
+  {
+    src: "/gallery/IMG_6642.webp",
+    width: 5577,
+    height: 3137,
+    alt: "Brand collaboration 10",
+  },
+  {
+    src: "/gallery/IMG_6709.webp",
+    width: 5712,
+    height: 4284,
+    alt: "Brand collaboration 26",
   },
   {
     src: "/gallery/IMG_6620.webp",
@@ -60,10 +85,10 @@ const photos = [
     alt: "Brand collaboration 9",
   },
   {
-    src: "/gallery/IMG_6642.webp",
-    width: 5577,
-    height: 3137,
-    alt: "Brand collaboration 10",
+    src: "/gallery/IMG_6692.webp",
+    width: 4032,
+    height: 2268,
+    alt: "Brand collaboration 20",
   },
   {
     src: "/gallery/IMG_6646.webp",
@@ -120,12 +145,6 @@ const photos = [
     alt: "Brand collaboration 19",
   },
   {
-    src: "/gallery/IMG_6692.webp",
-    width: 4032,
-    height: 2268,
-    alt: "Brand collaboration 20",
-  },
-  {
     src: "/gallery/IMG_6693.webp",
     width: 4032,
     height: 2268,
@@ -156,12 +175,6 @@ const photos = [
     alt: "Brand collaboration 25",
   },
   {
-    src: "/gallery/IMG_6709.webp",
-    width: 5712,
-    height: 4284,
-    alt: "Brand collaboration 26",
-  },
-  {
     src: "/gallery/IMG_6711.webp",
     width: 4032,
     height: 3024,
@@ -175,21 +188,9 @@ const photos = [
   },
   {
     src: "/gallery/IMG_6721.webp",
-    width: 5712,
-    height: 4284,
+    width: 4284,
+    height: 5712,
     alt: "Brand collaboration 29",
-  },
-  {
-    src: "/gallery/WhatsApp Image 2025-11-22 at 10.58.17 PM (2).webp",
-    width: 1206,
-    height: 689,
-    alt: "Brand collaboration 30",
-  },
-  {
-    src: "/gallery/WhatsApp Image 2025-11-22 at 10.58.43 PM (1).webp",
-    width: 914,
-    height: 637,
-    alt: "Brand collaboration 31",
   },
   {
     src: "/gallery/image.webp",
@@ -200,6 +201,11 @@ const photos = [
 ];
 
 export function BrandGallery() {
+  const [showAll, setShowAll] = useState(false);
+  const initialPhotoCount = 10; // Show approximately 2 rows
+  const initialPhotos = photos.slice(0, initialPhotoCount);
+  const additionalPhotos = photos.slice(initialPhotoCount);
+
   return (
     <section className="py-16 px-4">
       <div className="max-w-7xl mx-auto">
@@ -213,12 +219,9 @@ export function BrandGallery() {
           <h2 className="text-4xl sm:text-5xl font-semibold mb-3">
             Partnered With India's Most Trusted Brands
           </h2>
-          <p className="text-muted-foreground text-base sm:text-lg">
-            See our collaborations and partnerships across the nation
-          </p>
         </motion.div>
 
-        {/* Photo Album */}
+        {/* Photo Album - Initial Photos */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -226,12 +229,68 @@ export function BrandGallery() {
           transition={{ delay: 0.2 }}
         >
           <RowsPhotoAlbum
-            photos={photos}
+            photos={initialPhotos}
             targetRowHeight={100}
             spacing={6}
             rowConstraints={{ maxPhotos: 5 }}
           />
         </motion.div>
+
+        {/* Photo Album - Additional Photos with Animation */}
+        <AnimatePresence>
+          {showAll && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: "auto", marginTop: 6 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
+              style={{ overflow: "hidden" }}
+            >
+              <RowsPhotoAlbum
+                photos={additionalPhotos}
+                targetRowHeight={100}
+                spacing={6}
+                rowConstraints={{ maxPhotos: 5 }}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* View More/Less Button */}
+        <AnimatePresence mode="wait">
+          {!showAll ? (
+            <motion.div
+              key="view-more"
+              initial={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="mt-6 flex justify-center"
+            >
+              <button
+                onClick={() => setShowAll(true)}
+                className="px-6 py-2.5 border border-gray-800 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+              >
+                View More
+              </button>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="view-less"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              transition={{ duration: 0.2, delay: 0.3 }}
+              className="mt-6 flex justify-center"
+            >
+              <button
+                onClick={() => setShowAll(false)}
+                className="px-6 py-2.5 border border-gray-800 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+              >
+                View Less
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </section>
   );

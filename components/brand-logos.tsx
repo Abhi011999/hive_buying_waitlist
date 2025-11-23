@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
@@ -44,10 +44,21 @@ const brands = [
 
 export function BrandLogos() {
   const [showAll, setShowAll] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 1024); // lg breakpoint
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   const mobileCols = 4;
   const desktopCols = 7;
-  const initialVisibleCount = Math.min(brands.length, 14);
+  const initialVisibleCount = isMobile ? 16 : 14; // 4x4 for mobile, 2 rows for desktop
   const initialBrands = brands.slice(0, initialVisibleCount);
   const additionalBrands = brands.slice(initialVisibleCount);
   const visibleCount = showAll ? brands.length : initialVisibleCount;
@@ -80,6 +91,18 @@ export function BrandLogos() {
 
   return (
     <section className="w-full px-4 sm:px-6 lg:px-12 xl:px-16 mb-12 sm:mb-16 lg:mb-20">
+      {/* Header */}
+      <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-12"
+        >
+          <h2 className="text-4xl sm:text-5xl font-semibold mb-3">
+          Brands That Trust Us
+          </h2>
+        </motion.div>
+      
       <motion.div
         variants={containerVariants}
         initial="hidden"

@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ProductPopup } from "./product-popup";
 
@@ -101,6 +102,20 @@ const products = [
 
 export function PopularProducts() {
   const [selectedProduct, setSelectedProduct] = useState<string | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
+  const scroll = (direction: 'left' | 'right') => {
+    if (scrollContainerRef.current) {
+      const scrollAmount = 400;
+      const newScrollLeft = scrollContainerRef.current.scrollLeft + 
+        (direction === 'left' ? -scrollAmount : scrollAmount);
+      
+      scrollContainerRef.current.scrollTo({
+        left: newScrollLeft,
+        behavior: 'smooth'
+      });
+    }
+  };
 
   return (
     <>
@@ -207,9 +222,11 @@ export function PopularProducts() {
               ))}
             </div>
 
-            {/* Desktop: Horizontal Scroll */}
-            <div className="hidden sm:block overflow-x-auto pb-4 custom-scrollbar">
-              <div className="flex gap-6 px-4 min-w-max">
+            {/* Desktop: Horizontal Scroll with Navigation Arrows */}
+            <div className="hidden sm:block">
+              {/* Scroll Container */}
+              <div ref={scrollContainerRef} className="overflow-x-auto pb-4 custom-scrollbar">
+                <div className="flex gap-6 px-4 min-w-max">
                 {products.map((product, index) => (
                   <motion.div
                     key={product.id}
@@ -290,7 +307,26 @@ export function PopularProducts() {
                   </div>
                 </motion.div>
               ))}
-            </div>
+              </div>
+              </div>
+
+              {/* Navigation Arrows - Bottom Right */}
+              <div className="flex items-center justify-end gap-4 mt-6 px-4">
+                <button
+                  onClick={() => scroll('left')}
+                  className="bg-white border-2 border-black rounded-full p-2 shadow-lg hover:bg-gray-100 transition-all"
+                  aria-label="Scroll left"
+                >
+                  <ChevronLeft className="w-6 h-6" />
+                </button>
+                <button
+                  onClick={() => scroll('right')}
+                  className="bg-white border-2 border-black rounded-full p-2 shadow-lg hover:bg-gray-100 transition-all"
+                  aria-label="Scroll right"
+                >
+                  <ChevronRight className="w-6 h-6" />
+                </button>
+              </div>
             </div>
           </div>
         </div>

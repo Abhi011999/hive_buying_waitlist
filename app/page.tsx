@@ -14,6 +14,8 @@ import Footer from "@/components/footer";
 import { PopularProducts } from "@/components/popular-products";
 import { BrandLogos } from "@/components/brand-logos";
 import { BrandGallery } from "@/components/brand-gallery";
+// import WhatsappFloatingWidget from "@/components/whatsapp-floating-widget";
+import ScrollCTABar from "@/components/scroll-cta-bar";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function Home() {
@@ -142,7 +144,7 @@ export default function Home() {
     <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip py-8 sm:py-0">
       <Header />
       
-      <section className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-16 lg:gap-24 xl:gap-40 px-4 sm:px-6 lg:px-12 xl:px-16 mt-48 sm:mt-56 lg:mt-64 xl:mt-72 mb-20 sm:mb-28 lg:mb-32 xl:mb-40 w-full max-w-[90rem]">
+      <section className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-16 lg:gap-24 xl:gap-40 px-4 sm:px-6 lg:px-12 xl:px-16 mt-20 sm:mt-24 lg:mt-32 xl:mt-40 mb-12 sm:mb-16 lg:mb-20 xl:mb-24 w-full max-w-[90rem]">
         {/* Left side - CTA */}
         <div className="flex flex-col items-center lg:items-start lg:flex-1">
           <CTA />
@@ -226,11 +228,11 @@ export default function Home() {
         </div>
       </section>
 
-      <BrandLogos />
-
       <PopularProducts />
 
       <BrandGallery />
+
+      <BrandLogos />
 
       <div className="mt-6 sm:mt-8 mb-12 sm:mb-16">
         <HowItWorks />
@@ -245,6 +247,9 @@ export default function Home() {
       />
 
       <Footer />
+
+      <ScrollCTABar />
+      {/* <WhatsappFloatingWidget /> */}
     </main>
   );
 }
