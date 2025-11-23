@@ -38,20 +38,35 @@ export default function Footer() {
       </motion.div>
 
       {/* Large background text */}
-      <div className="relative flex items-center justify-center pointer-events-none overflow-hidden py-4 sm:py-2 lg:-my-4 w-full px-4">
-        <h2 
-          className="font-bold text-gray-100 select-none whitespace-nowrap origin-center"
-          style={{
-            fontSize: '16rem',
-            transform: 'scale(min(1, calc((100vw - 2rem) / 1100)))',
-            maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
-            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
-            maskComposite: 'intersect',
-            WebkitMaskComposite: 'source-in',
-          }}
-        >
-          HIVEBUYING
-        </h2>
+      <div className="relative flex items-center pointer-events-none overflow-hidden py-4 sm:py-2 lg:-my-4 w-full">
+        <div className="flex whitespace-nowrap animate-marquee">
+          <h2 
+            className="font-bold text-gray-100 select-none whitespace-nowrap px-8"
+            style={{
+              fontSize: '16rem',
+              transform: 'scale(min(1, calc((100vw - 2rem) / 1100)))',
+              maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in',
+            }}
+          >
+            HIVEBUYING
+          </h2>
+          <h2 
+            className="font-bold text-gray-100 select-none whitespace-nowrap px-8"
+            style={{
+              fontSize: '16rem',
+              transform: 'scale(min(1, calc((100vw - 2rem) / 1100)))',
+              maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
+              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
+              maskComposite: 'intersect',
+              WebkitMaskComposite: 'source-in',
+            }}
+          >
+            HIVEBUYING
+          </h2>
+        </div>
       </div>
     </footer>
   );
