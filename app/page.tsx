@@ -12,13 +12,18 @@ import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { PopularProducts } from "@/components/popular-products";
+import { BrandLogos } from "@/components/brand-logos";
+import { BrandGallery } from "@/components/brand-gallery";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function Home() {
   const [name, setName] = useState<string>("");
   const [mobile, setMobile] = useState<string>("");
   const [product, setProduct] = useState<string>("");
+  const [location, setLocation] = useState<string>("");
+  const [note, setNote] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
+  const [submitted, setSubmitted] = useState<boolean>(false);
 
   const users = [
     {
@@ -52,6 +57,14 @@ export default function Home() {
     setProduct(value);
   };
 
+  const handleLocationChange = (value: string) => {
+    setLocation(value);
+  };
+
+  const handleNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNote(event.target.value);
+  };
+
   const handleSubmit = async () => {
     if (!name) {
       toast.error("Please enter your name 😠");
@@ -68,6 +81,11 @@ export default function Home() {
       return;
     }
 
+    if (!location) {
+      toast.error("Please select your location 😠");
+      return;
+    }
+
     setLoading(true);
 
     const promise = new Promise(async (resolve, reject) => {
@@ -77,7 +95,7 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, mobile, product }),
+          body: JSON.stringify({ name, mobile, product, location, note }),
         });
 
         if (!response.ok) {
@@ -100,6 +118,9 @@ export default function Home() {
         setName("");
         setMobile("");
         setProduct("");
+        setLocation("");
+        setNote("");
+        setSubmitted(true);
         return "Thanks! We'll reach out soon 🎉";
       },
       error: (error) => {
@@ -119,82 +140,97 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip py-8 sm:py-0">
-      <section className="flex flex-col items-center px-4 sm:px-6 lg:px-8 gap-y-4 sm:gap-y-0 mt-12 sm:mt-16">
-        <Header />
+      <Header />
+      
+      <section className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-16 lg:gap-24 xl:gap-40 px-4 sm:px-6 lg:px-12 xl:px-16 mt-48 sm:mt-56 lg:mt-64 xl:mt-72 mb-20 sm:mb-28 lg:mb-32 xl:mb-40 w-full max-w-[90rem]">
+        {/* Left side - CTA */}
+        <div className="flex flex-col items-center lg:items-start lg:flex-1">
+          <CTA />
 
-        <CTA />
-
-        <Form
-          name={name}
-          mobile={mobile}
-          product={product}
-          handleNameChange={handleNameChange}
-          handleMobileChange={handleMobileChange}
-          handleProductChange={handleProductChange}
-          handleSubmit={handleSubmit}
-          loading={loading}
-        />
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-6 sm:mt-8"
-        >
           <motion.div
-            variants={itemVariants}
-            className="flex flex-row items-center justify-center mb-1 gap-1"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mt-6 sm:mt-8"
           >
-            {users.map((user, idx) => (
-              <img
-                key={user.id}
-                src={user.image}
-                alt={`User ${user.id}`}
-                className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-white object-cover -ml-2 first:ml-0"
-              />
-            ))}
+            <motion.div
+              variants={itemVariants}
+              className="flex flex-row items-center justify-center lg:justify-start mb-1 gap-1"
+            >
+              {users.map((user, idx) => (
+                <img
+                  key={user.id}
+                  src={user.image}
+                  alt={`User ${user.id}`}
+                  className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-white object-cover -ml-2 first:ml-0"
+                />
+              ))}
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-1 sm:mt-1.5"
-        >
           <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mt-1 sm:mt-1.5"
           >
-            <div className="flex w-fit items-center justify-center rounded-full border border-black-200 bg-transparent text-center">
-              <div className="px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium">
-                🎉 2309+ users already joined
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center justify-center lg:justify-start"
+            >
+              <div className="flex w-fit items-center justify-center rounded-full border border-black-200 bg-transparent text-center">
+                <div className="px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium">
+                  🎉 12309+ people already joined
+                </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="mt-4 sm:mt-6 mb-12 sm:mb-16"
-        >
           <motion.div
-            variants={itemVariants}
-            className="flex items-center justify-center gap-1 text-xs sm:text-sm text-muted-foreground">
-            <p>For any queries, reach out at </p>
-            <Link
-              href="https://wa.link/psnvgp"
-              rel="noopener noreferrer"
-              target="_blank">
-              <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5 transition-all duration-200 ease-linear hover:text-black" />
-            </Link>
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+            className="mt-4 sm:mt-6"
+          >
+            <motion.div
+              variants={itemVariants}
+              className="flex items-center justify-center lg:justify-start gap-1 text-xs sm:text-sm text-muted-foreground">
+              <p>For any queries, reach out at </p>
+              <Link
+                href="https://wa.link/psnvgp"
+                rel="noopener noreferrer"
+                target="_blank">
+                <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5 transition-all duration-200 ease-linear hover:text-black" />
+              </Link>
+            </motion.div>
           </motion.div>
-        </motion.div>
+        </div>
+
+        {/* Right side - Form */}
+        <div className="flex flex-col items-center lg:items-start lg:flex-1 lg:max-w-md mb-12 sm:mb-16 lg:mb-0">
+          <Form
+            name={name}
+            mobile={mobile}
+            product={product}
+            location={location}
+            note={note}
+            handleNameChange={handleNameChange}
+            handleMobileChange={handleMobileChange}
+            handleProductChange={handleProductChange}
+            handleLocationChange={handleLocationChange}
+            handleNoteChange={handleNoteChange}
+            handleSubmit={handleSubmit}
+            loading={loading}
+            submitted={submitted}
+          />
+        </div>
       </section>
 
+      <BrandLogos />
+
       <PopularProducts />
+
+      <BrandGallery />
 
       <div className="mt-6 sm:mt-8 mb-12 sm:mb-16">
         <HowItWorks />

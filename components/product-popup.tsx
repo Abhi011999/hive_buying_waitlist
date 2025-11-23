@@ -19,21 +19,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { PRODUCT_CATEGORIES } from "@/lib/constants";
 
 interface ProductPopupProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   productName: string;
 }
-
-const productCategories = [
-  "Phones",
-  "Laptops/Ipads",
-  "Gadgets",
-  "Scooty/Bike",
-  "Cars",
-  "Others",
-];
 
 export function ProductPopup({ open, onOpenChange, productName }: ProductPopupProps) {
   const [loading, setLoading] = useState(false);
@@ -126,7 +118,7 @@ export function ProductPopup({ open, onOpenChange, productName }: ProductPopupPr
                 <SelectValue placeholder="Select product category" />
               </SelectTrigger>
               <SelectContent>
-                {productCategories.map((category) => (
+                {PRODUCT_CATEGORIES.map((category) => (
                   <SelectItem key={category} value={category}>
                     {category}
                   </SelectItem>

@@ -1,14 +1,6 @@
 import { Client } from "@notionhq/client";
 import { NextResponse } from "next/server";
-
-const VALID_PRODUCTS = [
-  "Phones",
-  "Laptops/Ipads",
-  "Gadgets",
-  "Scooty/Bike",
-  "Cars",
-  "Others",
-];
+import { PRODUCT_CATEGORIES, LOCATIONS } from "@/lib/constants";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -31,6 +23,8 @@ export async function POST(request: Request) {
   const name = body?.name?.trim();
   const mobile = body?.mobile?.trim();
   const product = body?.product?.trim();
+  const location = body?.location?.trim();
+  const note = body?.note?.trim() || "";
 
   // Validate name
   if (!name || name.length === 0) {
@@ -79,10 +73,25 @@ export async function POST(request: Request) {
     }, { status: 400 });
   }
 
-  if (!VALID_PRODUCTS.includes(product)) {
+  if (!PRODUCT_CATEGORIES.includes(product as any)) {
     return NextResponse.json({ 
       success: false, 
       error: "Invalid product selection" 
+    }, { status: 400 });
+  }
+
+  // Validate location
+  if (!location || location.length === 0) {
+    return NextResponse.json({ 
+      success: false, 
+      error: "Location is required" 
+    }, { status: 400 });
+  }
+
+  if (!LOCATIONS.includes(location as any)) {
+    return NextResponse.json({ 
+      success: false, 
+      error: "Invalid location selection" 
     }, { status: 400 });
   }
 
@@ -92,34 +101,58 @@ export async function POST(request: Request) {
       notionVersion: "2022-06-28"
     });
     
+    const properties: any = {
+      Name: {
+        title: [
+          {
+            text: {
+              content: name,
+            },
+          },
+        ],
+      },
+      Phone: {
+        phone_number: mobile,
+      },
+      "Product interested": {
+        select: {
+          name: product,
+        },
+      },
+      Location: {
+        rich_text: [
+          {
+            text: {
+              content: location,
+            },
+          },
+        ],
+      },
+      Date: {
+        date: {
+          start: new Date().toISOString(),
+        },
+      },
+    };
+
+    // Add note if provided
+    if (note && note.length > 0) {
+      properties["Your Note"] = {
+        rich_text: [
+          {
+            text: {
+              content: note,
+            },
+          },
+        ],
+      };
+    }
+
     const response = await notion.pages.create({
       parent: {
         database_id: process.env.NOTION_POPUP_DB,
       },
-      properties: {
-        Name: {
-          title: [
-            {
-              text: {
-                content: name,
-              },
-            },
-          ],
-        },
-        Phone: {
-          phone_number: mobile,
-        },
-        "Product interested": {
-          select: {
-            name: product,
-          },
-        },
-        Date: {
-          date: {
-            start: new Date().toISOString(),
-          },
-        },
-      },
+      properties,
     });
 
     console.log("Popup lead created:", response.id);

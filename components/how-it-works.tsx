@@ -13,13 +13,13 @@ const timelineSteps = [
     id: 2,
     icon: Users,
     title: "Join the group",
-    description: "Check out groups already formed to buy the same product.",
+    description: "Join a group with people who want the same product.",
   },
   {
     id: 3,
     icon: ShoppingCart,
     title: "Buy Together, Save More",
-    description: "Once the group fills, the discounted price is set for all.",
+    description: "Once the group fills, the deal starts directly with the brand.",
   },
 ];
 

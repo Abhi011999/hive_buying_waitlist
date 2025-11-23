@@ -32,6 +32,10 @@
     --input: 240 5.9% 90%;
     --ring: 240 10% 3.9%;
 
+    --brand-blue: 200 100% 68%;
+    --theme-yellow-bg: 54 100% 62%;
+    --theme-blue-bg: 186 35% 47%;
+
     --radius: 0.5rem;
   }
 
@@ -117,4 +121,22 @@ body {
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background-color: rgba(255, 255, 255, 0.6);
+}
+
+/* Brand logos infinite scroll animation */
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
 }
