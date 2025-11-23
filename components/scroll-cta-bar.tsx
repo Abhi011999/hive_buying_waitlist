@@ -12,8 +12,13 @@ export default function ScrollCTABar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      // Show bar when scrolled down more than 300px
-      if (window.scrollY > 300) {
+      const scrollPosition = window.scrollY;
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const isNearBottom = scrollPosition + windowHeight >= documentHeight - 100;
+
+      // Show bar when scrolled down more than 300px, but hide if near bottom
+      if (scrollPosition > 300 && !isNearBottom) {
         setIsVisible(true);
       } else {
         setIsVisible(false);

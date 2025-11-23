@@ -26,6 +26,7 @@ export default function Home() {
   const [note, setNote] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(false);
   const [submitted, setSubmitted] = useState<boolean>(false);
+  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
 
   const users = [
     {
@@ -67,6 +68,10 @@ export default function Home() {
     setNote(event.target.value);
   };
 
+  const handleRecaptchaVerify = (token: string) => {
+    setRecaptchaToken(token);
+  };
+
   const handleSubmit = async () => {
     if (!name) {
       toast.error("Please enter your name 😠");
@@ -88,6 +93,11 @@ export default function Home() {
       return;
     }
 
+    if (!recaptchaToken) {
+      toast.error("Please verify you're not a robot 🤖");
+      return;
+    }
+
     setLoading(true);
 
     const promise = new Promise(async (resolve, reject) => {
@@ -97,7 +107,7 @@ export default function Home() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ name, mobile, product, location, note }),
+          body: JSON.stringify({ name, mobile, product, location, note, recaptchaToken }),
         });
 
         if (!response.ok) {
@@ -122,6 +132,7 @@ export default function Home() {
         setProduct("");
         setLocation("");
         setNote("");
+        setRecaptchaToken("");
         setSubmitted(true);
         return "Thanks! We'll reach out soon 🎉";
       },
@@ -222,6 +233,7 @@ export default function Home() {
             handleLocationChange={handleLocationChange}
             handleNoteChange={handleNoteChange}
             handleSubmit={handleSubmit}
+            handleRecaptchaVerify={handleRecaptchaVerify}
             loading={loading}
             submitted={submitted}
           />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -20,6 +20,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ReCaptcha, ReCaptchaRef } from "@/components/ui/recaptcha";
 import { PRODUCT_CATEGORIES, LOCATIONS } from "@/lib/constants";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
@@ -32,6 +33,8 @@ interface ProductPopupProps {
 export function ProductPopup({ open, onOpenChange, productName }: ProductPopupProps) {
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [recaptchaToken, setRecaptchaToken] = useState("");
+  const recaptchaRef = useRef<ReCaptchaRef>(null);
   const [formData, setFormData] = useState({
     name: "",
     mobile: "",
@@ -70,6 +73,11 @@ export function ProductPopup({ open, onOpenChange, productName }: ProductPopupPr
       return;
     }
 
+    if (!recaptchaToken) {
+      toast.error("Please verify you're not a robot 🤖");
+      return;
+    }
+
     setLoading(true);
 
     const promise = new Promise(async (resolve, reject) => {
@@ -85,6 +93,7 @@ export function ProductPopup({ open, onOpenChange, productName }: ProductPopupPr
             product: formData.product,
             location: formData.location,
             note: formData.note,
+            recaptchaToken,
           }),
         });
 
@@ -112,6 +121,7 @@ export function ProductPopup({ open, onOpenChange, productName }: ProductPopupPr
           location: "",
           note: "",
         });
+        setRecaptchaToken("");
         setSubmitted(true);
         setTimeout(() => {
           onOpenChange(false);
@@ -218,6 +228,15 @@ export function ProductPopup({ open, onOpenChange, productName }: ProductPopupPr
                 rows={2}
                 className="w-full text-sm sm:text-base bg-transparent border border-input rounded-md px-3 py-2 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
                 disabled={loading}
+              />
+            </div>
+
+            <div className="flex justify-center">
+              <ReCaptcha
+                ref={recaptchaRef}
+                onVerify={setRecaptchaToken}
+                theme="light"
+                size="normal"
               />
             </div>
 

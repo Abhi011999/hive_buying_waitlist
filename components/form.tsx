@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useRef } from "react";
 import { motion } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { FaArrowRightLong } from "react-icons/fa6";
@@ -10,6 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { ReCaptcha, ReCaptchaRef } from "@/components/ui/recaptcha";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 import { PRODUCT_CATEGORIES, LOCATIONS } from "@/lib/constants";
 
@@ -25,6 +26,7 @@ interface FormProps {
   handleLocationChange: (value: string) => void;
   handleNoteChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
   handleSubmit: () => void;
+  handleRecaptchaVerify: (token: string) => void;
   loading: boolean;
   submitted: boolean;
 }
@@ -41,9 +43,12 @@ export default function Form({
   handleLocationChange,
   handleNoteChange,
   handleSubmit,
+  handleRecaptchaVerify,
   loading,
   submitted,
 }: FormProps) {
+  const recaptchaRef = useRef<ReCaptchaRef>(null);
+
   return (
     <motion.div
       className="mt-4 flex w-full max-w-[28rem] sm:mt-6 flex-col gap-3 sm:gap-4 p-6 sm:p-8"
@@ -120,6 +125,14 @@ export default function Form({
               onChange={handleNoteChange}
               rows={2}
               className="w-full text-sm sm:text-base bg-transparent border border-black/30 rounded-md px-3 py-2 placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 resize-none"
+            />
+          </motion.div>
+          <motion.div variants={itemVariants} className="flex justify-center">
+            <ReCaptcha
+              ref={recaptchaRef}
+              onVerify={handleRecaptchaVerify}
+              theme="light"
+              size="normal"
             />
           </motion.div>
           <motion.div variants={itemVariants}>
