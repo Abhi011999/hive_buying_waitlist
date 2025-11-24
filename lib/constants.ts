@@ -6,7 +6,8 @@ export const PRODUCT_CATEGORIES = [
   "Home Appliances",
   "Scooty/Bike",
   "Cars",
-  "Others",
+  "Other Products",
+  "Exploring for now"
 ] as const;
 
 // Locations
