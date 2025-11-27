@@ -8,13 +8,13 @@ import "react-photo-album/rows.css";
 const photos = [
   {
     src: "/gallery/Generated Image November 22, 2025 - 5_31PM.webp",
-    width: 1344,
+    width: 1251,
     height: 768,
     alt: "Brand collaboration 1",
   },
   {
     src: "/gallery/Generated Image November 22, 2025 - 5_35PM.webp",
-    width: 1344,
+    width: 1253,
     height: 768,
     alt: "Brand collaboration 2",
   },
