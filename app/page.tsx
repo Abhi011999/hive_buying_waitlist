@@ -210,7 +210,7 @@ export default function Home() {
               className="flex items-center justify-center lg:justify-start gap-1 text-xs sm:text-sm text-muted-foreground">
               <p>For any queries, reach out at </p>
               <Link
-                href="https://wa.link/psnvgp"
+                href="https://wa.link/5vzeno"
                 rel="noopener noreferrer"
                 target="_blank">
                 <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5 transition-all duration-200 ease-linear hover:text-black" />

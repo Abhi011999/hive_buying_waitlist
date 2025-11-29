@@ -44,7 +44,7 @@ export const NotionWaitlistEmail = ({ userFirstname }: EmailProps) => (
         </Text>
         <Text style={paragraph}>
           You can also reach out via WhatsApp for updates:{" "}
-          <a href="https://wa.link/psnvgp" style={link}>
+          <a href="https://wa.link/5vzeno" style={link}>
             +91 902 668 4646
           </a>
         </Text>
