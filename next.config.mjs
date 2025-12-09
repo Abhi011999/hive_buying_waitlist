@@ -6,17 +6,7 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
-  webpack: (config, { isServer }) => {
-    config.ignoreWarnings = [
-      { module: /./ },
-      { file: /./ },
-    ];
-    return config;
-  },
-  onDemandEntries: {
-    maxInactiveAge: 25 * 1000,
-    pagesBufferLength: 2,
-  },
+  turbopack: {},
 }
 
 export default nextConfig
