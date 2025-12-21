@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
+import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -12,7 +13,7 @@ export default function Footer() {
         animate="visible"
         className="max-w-7xl mx-auto pt-6 pb-2"
       >
-        <div className="flex flex-row items-start justify-between gap-6">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           {/* Left side - Logo and copyright */}
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
             <div className="text-xs text-gray-600">
@@ -21,18 +22,49 @@ export default function Footer() {
             </div>
           </motion.div>
 
-          {/* Right side - Links */}
-          <motion.div variants={itemVariants} className="flex flex-col gap-3 sm:flex-row sm:gap-6">
-            <Link
-              href="/faqs"
-              className="text-xs text-gray-600 hover:text-black transition-colors duration-200 underline underline-offset-2">
-              FAQs
-            </Link>
-            <Link
-              href="/privacy"
-              className="text-xs text-gray-600 hover:text-black transition-colors duration-200 underline underline-offset-2">
-              Privacy Policy
-            </Link>
+          {/* Right side - Links and Socials */}
+          <motion.div variants={itemVariants} className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+            {/* Social Icons */}
+            <div className="flex items-center gap-5">
+              <Link
+                href="https://x.com/hivebuying?s=21"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-black transition-colors duration-200"
+              >
+                <FaXTwitter size={18} />
+              </Link>
+              <Link
+                href="https://www.instagram.com/hivebuying/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-black transition-colors duration-200"
+              >
+                <FaInstagram size={18} />
+              </Link>
+              <Link
+                href="https://www.youtube.com/@Hivebuying"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-black transition-colors duration-200"
+              >
+                <FaYoutube size={20} />
+              </Link>
+            </div>
+
+            {/* Legal Links */}
+            <div className="flex gap-4 sm:gap-6">
+              <Link
+                href="/faqs"
+                className="text-xs text-gray-600 hover:text-black transition-colors duration-200 underline underline-offset-2">
+                FAQs
+              </Link>
+              <Link
+                href="/privacy"
+                className="text-xs text-gray-600 hover:text-black transition-colors duration-200 underline underline-offset-2">
+                Privacy Policy
+              </Link>
+            </div>
           </motion.div>
         </div>
       </motion.div>
