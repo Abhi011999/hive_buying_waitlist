@@ -11,7 +11,7 @@ export default function Footer() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="max-w-7xl mx-auto pt-6 pb-2"
+        className="max-w-7xl mx-auto pt-6 pb-20 sm:pb-2"
       >
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           {/* Left side - Logo and copyright */}
@@ -70,35 +70,16 @@ export default function Footer() {
       </motion.div>
 
       {/* Large background text */}
-      <div className="relative flex items-center pointer-events-none overflow-hidden py-4 sm:py-2 lg:-my-4 w-full">
-        <div className="flex whitespace-nowrap animate-marquee">
-          <h2 
-            className="font-bold text-gray-100 select-none whitespace-nowrap px-8"
-            style={{
-              fontSize: '16rem',
-              transform: 'scale(min(1, calc((100vw - 2rem) / 1100)))',
-              maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
-              maskComposite: 'intersect',
-              WebkitMaskComposite: 'source-in',
-            }}
-          >
-            HIVEBUYING
-          </h2>
-          <h2 
-            className="font-bold text-gray-100 select-none whitespace-nowrap px-8"
-            style={{
-              fontSize: '16rem',
-              transform: 'scale(min(1, calc((100vw - 2rem) / 1100)))',
-              maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
-              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%), linear-gradient(to right, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 1) 10%, rgba(0, 0, 0, 1) 90%, rgba(0, 0, 0, 0) 100%)',
-              maskComposite: 'intersect',
-              WebkitMaskComposite: 'source-in',
-            }}
-          >
-            HIVEBUYING
-          </h2>
-        </div>
+      <div className="relative hidden sm:flex items-center justify-center pointer-events-none overflow-hidden py-2 lg:-my-4 w-full">
+        <h2 
+          className="font-bold text-gray-100 select-none whitespace-nowrap text-[16rem]"
+          style={{
+            maskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%)',
+          }}
+        >
+          HIVEBUYING
+        </h2>
       </div>
     </footer>
   );

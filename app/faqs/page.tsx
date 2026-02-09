@@ -117,6 +117,95 @@ On HiveBuying, the discount is not set by the brand; it is created by people. Wh
 This is the essence of community buying and bulk buying. It combines the convenience of online shopping with the power of shared demand. Instead of waiting for festive deals or coupon codes, buyers can simply come together and unlock better prices.
 
 HiveBuying is not just another shopping site; it is a group buying platform that changes how people think about value. It brings people, technology, and brands together in one place to make buying fair for everyone.`
+  },
+  {
+    id: 11,
+    question: "I like the idea of buying together, but how does it actually work from start to finish on Hivebuying?",
+    answer: `Hivebuying is built on a simple idea. People should not have to buy expensive products alone. Group buying works when people come together, and Hivebuying makes that process easy and structured.
+
+On the Hivebuying group buying platform, the journey starts when a user selects a category such as cars, bikes, laptops, or home appliances. Hivebuying is designed as a community buying platform, so the focus is not on instant checkout but on collective intent.
+
+Once a category is selected, Hivebuying shows sub categories and specific products. For example, in community buying for cars, users may choose SUVs, sedans, or electric cars. Each product has a clear option to team up and buy.
+
+When a user clicks team up to buy on Hivebuying, they are asked a simple question about how soon they are planning to buy. This helps Hivebuying understand buyer intent and group people correctly. This step is important in group buying India because timing matters as much as price.
+
+After answering the question, the user is added to a Hivebuying group. This group includes people interested in the same product. This is where community buying begins. Users can see how many people are interested, which builds confidence and clarity.
+
+Hivebuying does not force users to buy immediately. The group grows naturally. As more people join, Hivebuying shows stronger demand to sellers. This is the core strength of a group buying platform.
+
+Once the group reaches a target number, Hivebuying moves the group closer to an actual deal. Sellers now see real demand, not random inquiries. This allows Hivebuying to unlock better pricing for the group.
+
+From start to finish, Hivebuying focuses on transparency, patience, and trust. Group buying on Hivebuying feels calm, not rushed. Community buying India works best when buyers feel supported, and Hivebuying is built exactly for that.`
+  },
+  {
+    id: 12,
+    question: "Will I really end up paying less, or is Hivebuying just another offer that sounds good at first?",
+    answer: `This is one of the most important questions people ask about group buying India. Many users have seen fake discounts and confusing offers. Hivebuying takes a different approach.
+
+Hivebuying is not an offer based platform. It is a group buying platform where prices improve because demand improves. This is a key difference.
+
+In Hivebuying group buying, sellers agree to better pricing when they see real buying intent from multiple people. This is community buying in its pure form. Sellers save money on advertising, sales calls, and negotiations. That saving is shared with buyers.
+
+Community buying India works especially well for high value products. Community buying for cars allows dealers to plan inventory better. Community buying bikes helps brands move stock efficiently. Hivebuying brings these buyers together in one place.
+
+Hivebuying does not promise discounts upfront. Instead, it shows how group size affects pricing. This builds honesty and trust. Buyers can see progress instead of being pushed into urgency.
+
+Group buying platforms like Hivebuying succeed because they remove noise from the buying process. When people buy together, sellers respond differently.
+
+So yes, users often pay less on Hivebuying. But more importantly, they pay fair. Hivebuying makes buying feel transparent instead of manipulative.`
+  },
+  {
+    id: 13,
+    question: "What happens if I join a Hivebuying group but not enough people sign up to buy?",
+    answer: `This is a genuine concern, and Hivebuying is designed to handle it safely.
+
+Joining a group on Hivebuying does not mean you are locked in. Hivebuying understands that community buying India must feel flexible to build trust.
+
+If a group does not reach the required number, Hivebuying does not force any purchase. There is no penalty. There is no pressure. The group may stay open longer, merge with similar interest groups, or close naturally.
+
+Hivebuying uses this data to understand demand patterns. This helps improve future group buying experiences.
+
+In community buying for cars and community buying bikes, timelines can vary. Hivebuying respects this reality. Buyers are informed clearly and can choose what works for them.
+
+Group buying platforms fail when they punish users. Hivebuying grows by protecting users.
+
+Even if a group does not fill, users walk away with clarity and confidence, not frustration. That is what makes Hivebuying a trusted group buying platform in India.`
+  },
+  {
+    id: 14,
+    question: "Is it safe to buy expensive products like cars or laptops through Hivebuying?",
+    answer: `Safety is critical in group buying India, especially for big purchases. Hivebuying is designed to support safety, not bypass it.
+
+Hivebuying does not replace sellers or brands. It connects buyers and sellers in a structured way. Final transactions still happen through authorized dealers or trusted sellers.
+
+In community buying for cars, buyers still complete paperwork, payments, and delivery as per standard processes. Hivebuying only helps with collective pricing and demand coordination.
+
+For laptops and electronics, Hivebuying works with verified sellers. Warranty, invoices, and service remain unchanged.
+
+Community buying India becomes safer when people move together. Buyers learn from each other. Questions get answered. Decisions feel less lonely.
+
+Hivebuying builds trust by keeping everything visible and simple. There are no hidden steps. There is no pressure to skip verification.
+
+Group buying platforms succeed when they slow things down and improve decision quality. Hivebuying does exactly that.`
+  },
+  {
+    id: 15,
+    question: "Why do brands and sellers agree to Hivebuying and community buying discounts?",
+    answer: `This question explains why Hivebuying works as a business model.
+
+Brands want three things. Predictable demand. Lower marketing costs. Faster decision cycles.
+
+Hivebuying delivers all three through group buying.
+
+In traditional selling, brands spend heavily to attract individual buyers. In Hivebuying community buying, buyers come pre-organized. This reduces cost and effort.
+
+Community buying India helps sellers plan inventory better. Community buying for cars helps dealers move stock with confidence. Community buying bikes allows brands to scale faster.
+
+Hivebuying is not asking sellers to reduce prices blindly. It offers them volume, certainty, and efficiency.
+
+Group buying platforms like Hivebuying align incentives. Buyers get better prices. Sellers get reliable demand.
+
+That balance is why Hivebuying is sustainable, not a gimmick.`
   }
 ];
 
