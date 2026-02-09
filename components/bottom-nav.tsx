@@ -8,7 +8,7 @@ const navItems = [
   { href: "/", label: "Home", icon: Home, exact: true },
   { href: "/explore", label: "Explore", icon: Compass },
   { href: "/groups", label: "Groups", icon: Users },
-  { href: "https://wa.link/5vzeno", label: "Support", icon: HeadphonesIcon, external: true },
+  { href: "/support", label: "Support", icon: HeadphonesIcon },
   { href: "/profile", label: "Profile", icon: User },
 ];
 

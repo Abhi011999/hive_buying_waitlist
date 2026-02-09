@@ -9,7 +9,7 @@ const navLinks = [
   { href: "/", label: "Home", icon: Home, exact: true },
   { href: "/explore", label: "Explore", icon: Compass },
   { href: "/groups", label: "Active Groups", icon: Users },
-  { href: "https://wa.link/5vzeno", label: "Support", icon: HeadphonesIcon, external: true },
+  { href: "/support", label: "Support", icon: HeadphonesIcon },
 ];
 
 export default function Header() {
