@@ -31,6 +31,7 @@ export function UnreadMessagesProvider({ children }: { children: React.ReactNode
   const [loading, setLoading] = useState(true);
   const [userGroups, setUserGroups] = useState<string[]>([]);
   const supabaseRef = useRef(createClient());
+  const userIdRef = useRef<string | null>(null);
   const initializedRef = useRef(false);
 
   const fetchUnread = useCallback(async () => {
@@ -61,6 +62,9 @@ export function UnreadMessagesProvider({ children }: { children: React.ReactNode
         return;
       }
 
+      // Cache user ID for real-time handler
+      userIdRef.current = user.id;
+
       // Fetch unread counts
       fetchUnread();
 
@@ -80,9 +84,11 @@ export function UnreadMessagesProvider({ children }: { children: React.ReactNode
 
   // Set up real-time subscription
   useEffect(() => {
-    if (userGroups.length === 0) return;
+    if (userGroups.length === 0 || !userIdRef.current) return;
 
     const supabase = supabaseRef.current;
+    const currentUserId = userIdRef.current;
+
     const channel = supabase
       .channel("unread-messages-global")
       .on(
@@ -92,14 +98,14 @@ export function UnreadMessagesProvider({ children }: { children: React.ReactNode
           schema: "public",
           table: "group_messages",
         },
-        async (payload) => {
+        (payload) => {
           const newMsg = payload.new as any;
           
+          // Skip if not in user's groups or is own message
           if (!userGroups.includes(newMsg.product_id)) return;
+          if (newMsg.user_id === currentUserId) return;
 
-          const { data: { user } } = await supabase.auth.getUser();
-          if (!user || newMsg.user_id === user.id) return;
-
+          // Update immediately - no async calls needed
           setData((prev) => {
             const newCounts = { ...prev.unreadCounts };
             newCounts[newMsg.product_id] = (newCounts[newMsg.product_id] || 0) + 1;
@@ -118,19 +124,23 @@ export function UnreadMessagesProvider({ children }: { children: React.ReactNode
   }, [userGroups]);
 
   const markAsRead = useCallback(async (productId: string) => {
+    // Update UI immediately (optimistic)
+    setData((prev) => {
+      const count = prev.unreadCounts[productId] || 0;
+      if (count === 0) return prev;
+      const newCounts = { ...prev.unreadCounts };
+      delete newCounts[productId];
+      return {
+        unreadCounts: newCounts,
+        totalUnread: Math.max(0, prev.totalUnread - count),
+      };
+    });
+
+    // Then persist to server
     try {
       await fetch(`/api/groups/${productId}/read`, { method: "POST" });
-      setData((prev) => {
-        const count = prev.unreadCounts[productId] || 0;
-        const newCounts = { ...prev.unreadCounts };
-        delete newCounts[productId];
-        return {
-          unreadCounts: newCounts,
-          totalUnread: Math.max(0, prev.totalUnread - count),
-        };
-      });
     } catch {
-      // Silently fail
+      // Silently fail - UI already updated
     }
   }, []);
 

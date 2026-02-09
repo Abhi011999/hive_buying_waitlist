@@ -28,8 +28,15 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
   return (
     <Link
       href={`/groups/${product.id}`}
-      className="flex items-center gap-4 rounded-2xl border-2 border-black/10 p-4 transition hover:border-black/20 hover:shadow-md"
+      className="relative flex items-center gap-4 rounded-2xl border-2 border-black/10 p-4 transition hover:border-black/20 hover:shadow-md"
     >
+      {/* Unread badge - positioned outside overflow container */}
+      {unreadCount > 0 && (
+        <span className="absolute -right-1 -top-1 z-10 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white shadow-sm">
+          {unreadCount > 99 ? "99+" : unreadCount}
+        </span>
+      )}
+
       {/* Product image */}
       <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl bg-black/5">
         {product.image_url ? (
@@ -42,11 +49,6 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
           <div className="flex h-full w-full items-center justify-center text-xl font-bold text-black/30">
             {product.brand?.charAt(0) || "?"}
           </div>
-        )}
-        {unreadCount > 0 && (
-          <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1 text-[10px] font-bold text-white">
-            {unreadCount > 99 ? "99+" : unreadCount}
-          </span>
         )}
       </div>
 
