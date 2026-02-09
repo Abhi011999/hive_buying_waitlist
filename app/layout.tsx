@@ -5,6 +5,7 @@ import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
 import { BottomNav } from "@/components/bottom-nav";
+import { ClientProviders } from "@/components/client-providers";
 
 const FigtreeFont = Figtree({ subsets: ["latin"] });
 
@@ -22,10 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
       <head>
-        {/* Google Tag Manager */}
+        {/* Google Tag Manager - load after interactive */}
         <Script
           id="gtm-script"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -40,10 +41,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <Script
           async
           src="https://www.googletagmanager.com/gtag/js?id=G-JS4R477PK5"
+          strategy="afterInteractive"
         />
         <Script
           id="ga-script"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
@@ -53,10 +55,10 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         {/* End Google Analytics */}
 
-        {/* Microsoft Clarity */}
+        {/* Microsoft Clarity - load lazily */}
         <Script
           id="clarity-script"
-          strategy="beforeInteractive"
+          strategy="lazyOnload"
           dangerouslySetInnerHTML={{
             __html: `(function(c,l,a,r,i,t,y){
         c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
@@ -67,13 +69,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         />
         {/* End Microsoft Clarity */}
 
-        {/* Google reCAPTCHA */}
-        <Script
-          src="https://www.google.com/recaptcha/api.js"
-          async
-          defer
-        />
-        {/* End Google reCAPTCHA */}
+        {/* Google reCAPTCHA - only load when needed via dynamic import */}
+        {/* Removed from global - load on auth pages only */}
 
         <meta name="google-site-verification" content="nn0Hh5dmz9McZgZpPbgITMVfoubnZGK61Hh1IVZibzw" />
         <link rel="icon" type="image/webp" href="/favicon-96x96.webp" sizes="96x96" />
@@ -110,7 +107,9 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           ></iframe>
         </noscript>
         {/* End Google Tag Manager (noscript) */}
-        {children}
+        <ClientProviders>
+          {children}
+        </ClientProviders>
         <BottomNav />
         <Toaster richColors position="top-center" />
         <Analytics />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
@@ -61,11 +61,13 @@ function getAvatarUrl(user: User): string | null {
 
 export function AuthButtons() {
   const router = useRouter();
-  const supabase = createClient();
+  const supabaseRef = useRef(createClient());
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const supabase = supabaseRef.current;
+    
     const getUser = async () => {
       const {
         data: { user },
@@ -82,10 +84,10 @@ export function AuthButtons() {
     });
 
     return () => subscription.unsubscribe();
-  }, [supabase.auth]);
+  }, []);
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await supabaseRef.current.auth.signOut();
     setUser(null);
     router.refresh();
   };

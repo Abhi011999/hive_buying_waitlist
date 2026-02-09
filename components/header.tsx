@@ -4,16 +4,18 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Home, Users, HeadphonesIcon, Compass } from "lucide-react";
 import { AuthButtons } from "@/components/auth-buttons";
+import { useUnreadMessages } from "@/hooks/use-unread-messages";
 
 const navLinks = [
   { href: "/", label: "Home", icon: Home, exact: true },
   { href: "/explore", label: "Explore", icon: Compass },
-  { href: "/groups", label: "Active Groups", icon: Users },
+  { href: "/groups", label: "Active Groups", icon: Users, showBadge: true },
   { href: "/support", label: "Support", icon: HeadphonesIcon },
 ];
 
 export default function Header() {
   const pathname = usePathname();
+  const { totalUnread } = useUnreadMessages();
 
   return (
     <header
@@ -37,32 +39,25 @@ export default function Header() {
         {/* Desktop nav links */}
         <nav className="hidden items-center gap-1 sm:flex">
           {navLinks.map((link) => {
-            const isActive = link.external
-              ? false
-              : link.exact
-                ? pathname === link.href
-                : pathname.startsWith(link.href);
-            return link.external ? (
-              <a
-                key={link.href}
-                href={link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full px-4 py-1.5 text-sm font-medium text-black/60 transition hover:bg-black/5 hover:text-black/90"
-              >
-                {link.label}
-              </a>
-            ) : (
+            const isActive = link.exact
+              ? pathname === link.href
+              : pathname.startsWith(link.href);
+            return (
               <Link
                 key={link.href}
                 href={link.href}
-                className={`rounded-full px-4 py-1.5 text-sm font-medium transition ${
+                className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition ${
                   isActive
                     ? "bg-black/10 text-black"
                     : "text-black/60 hover:bg-black/5 hover:text-black/90"
                 }`}
               >
                 {link.label}
+                {link.showBadge && totalUnread > 0 && (
+                  <span className="absolute -right-1 -top-1 flex h-5 min-w-5 items-center justify-center rounded-full bg-red-500 px-1.5 text-[10px] font-bold text-white">
+                    {totalUnread > 99 ? "99+" : totalUnread}
+                  </span>
+                )}
               </Link>
             );
           })}

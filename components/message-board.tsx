@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { createClient } from "@/lib/supabase/client";
 
 type Message = {
   id: string;
@@ -31,6 +32,7 @@ export function MessageBoard({
   const [loading, setLoading] = useState(true);
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const supabaseRef = useRef(createClient());
 
   useEffect(() => {
     if (!isMember || !currentUserId) {
@@ -38,10 +40,61 @@ export function MessageBoard({
       return;
     }
 
+    const supabase = supabaseRef.current;
+
+    // Initial fetch
     fetchMessages();
-    // Poll every 10 seconds for new messages
-    const interval = setInterval(fetchMessages, 10000);
-    return () => clearInterval(interval);
+    markAsRead();
+
+    // Set up real-time subscription
+    const channel = supabase
+      .channel(`group-messages-${productId}`)
+      .on(
+        "postgres_changes",
+        {
+          event: "INSERT",
+          schema: "public",
+          table: "group_messages",
+          filter: `product_id=eq.${productId}`,
+        },
+        async (payload) => {
+          // Fetch the full message with profile info
+          const newMsg = payload.new as any;
+          
+          // Get profile for the new message
+          const { data: profile } = await supabaseRef.current
+            .from("profiles")
+            .select("full_name, avatar_url")
+            .eq("id", newMsg.user_id)
+            .single();
+
+          const messageWithProfile: Message = {
+            id: newMsg.id,
+            content: newMsg.content,
+            created_at: newMsg.created_at,
+            user_id: newMsg.user_id,
+            profiles: profile,
+          };
+
+          // Only add if not already in the list (avoid duplicates from own messages)
+          setMessages((prev) => {
+            if (prev.some((m) => m.id === messageWithProfile.id)) {
+              return prev;
+            }
+            return [...prev, messageWithProfile];
+          });
+
+          // Mark as read if it's from someone else
+          if (newMsg.user_id !== currentUserId) {
+            markAsRead();
+          }
+        }
+      )
+      .subscribe();
+
+    return () => {
+      supabaseRef.current.removeChannel(channel);
+    };
   }, [productId, isMember, currentUserId]);
 
   useEffect(() => {
@@ -56,9 +109,17 @@ export function MessageBoard({
         setMessages(data.messages || []);
       }
     } catch {
-      // Silently fail for polling
+      // Silently fail
     } finally {
       setLoading(false);
+    }
+  };
+
+  const markAsRead = async () => {
+    try {
+      await fetch(`/api/groups/${productId}/read`, { method: "POST" });
+    } catch {
+      // Silently fail
     }
   };
 
@@ -129,14 +190,13 @@ export function MessageBoard({
           <div className="flex flex-col gap-3">
             {messages.map((msg) => {
               const isOwn = msg.user_id === currentUserId;
-              const name =
-                msg.profiles?.full_name || "Member";
+              const name = msg.profiles?.full_name || "User";
               const initials = name
                 .split(" ")
                 .map((w) => w[0])
                 .slice(0, 2)
                 .join("")
-                .toUpperCase();
+                .toUpperCase() || "U";
 
               return (
                 <div

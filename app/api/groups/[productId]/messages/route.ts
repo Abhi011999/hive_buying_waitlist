@@ -62,6 +62,23 @@ export async function GET(
       profiles?.forEach((p) => {
         profilesMap[p.id] = { full_name: p.full_name, avatar_url: p.avatar_url };
       });
+
+      // For users without profile names, try to get from auth metadata
+      for (const userId of userIds) {
+        if (!profilesMap[userId]?.full_name) {
+          // Check if this is the current user - we can get their metadata
+          if (userId === user.id) {
+            const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0];
+            const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture;
+            if (name || avatar) {
+              profilesMap[userId] = {
+                full_name: name || profilesMap[userId]?.full_name || null,
+                avatar_url: avatar || profilesMap[userId]?.avatar_url || null,
+              };
+            }
+          }
+        }
+      }
     }
 
     // Attach profiles to messages
@@ -154,10 +171,17 @@ export async function POST(
       .eq("id", user.id)
       .single();
 
+    // Use user metadata as fallback for name/avatar
+    const fullName = profile?.full_name || user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || null;
+    const avatarUrl = profile?.avatar_url || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+
     return NextResponse.json({ 
       message: {
         ...data,
-        profiles: profile || null,
+        profiles: {
+          full_name: fullName,
+          avatar_url: avatarUrl,
+        },
       }
     });
   } catch (err) {
