@@ -4,6 +4,7 @@ import { Figtree } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
 import { Analytics } from "@vercel/analytics/react";
+import { BottomNav } from "@/components/bottom-nav";
 
 const FigtreeFont = Figtree({ subsets: ["latin"] });
 
@@ -110,6 +111,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         </noscript>
         {/* End Google Tag Manager (noscript) */}
         {children}
+        <BottomNav />
         <Toaster richColors position="top-center" />
         <Analytics />
       </body>
