@@ -6,6 +6,7 @@ import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { createClient } from "@/lib/supabase/client";
+import { useUnreadMessages } from "@/hooks/use-unread-messages";
 
 type Message = {
   id: string;
@@ -33,6 +34,7 @@ export function MessageBoard({
   const [sending, setSending] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const supabaseRef = useRef(createClient());
+  const { markAsRead } = useUnreadMessages();
 
   useEffect(() => {
     if (!isMember || !currentUserId) {
@@ -44,7 +46,8 @@ export function MessageBoard({
 
     // Initial fetch
     fetchMessages();
-    markAsRead();
+    // Mark as read when opening chat
+    markAsRead(productId);
 
     // Set up real-time subscription
     const channel = supabase
@@ -68,12 +71,28 @@ export function MessageBoard({
             .eq("id", newMsg.user_id)
             .single();
 
+          // If no profile name, try to get current user's metadata as fallback
+          let fullName = profile?.full_name;
+          let avatarUrl = profile?.avatar_url;
+          
+          if (!fullName && newMsg.user_id === currentUserId) {
+            // For own messages, we can use session data
+            const { data: { user } } = await supabaseRef.current.auth.getUser();
+            if (user) {
+              fullName = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0] || null;
+              avatarUrl = avatarUrl || user.user_metadata?.avatar_url || user.user_metadata?.picture || null;
+            }
+          }
+
           const messageWithProfile: Message = {
             id: newMsg.id,
             content: newMsg.content,
             created_at: newMsg.created_at,
             user_id: newMsg.user_id,
-            profiles: profile,
+            profiles: {
+              full_name: fullName || null,
+              avatar_url: avatarUrl || null,
+            },
           };
 
           // Only add if not already in the list (avoid duplicates from own messages)
@@ -86,7 +105,7 @@ export function MessageBoard({
 
           // Mark as read if it's from someone else
           if (newMsg.user_id !== currentUserId) {
-            markAsRead();
+            markAsRead(productId);
           }
         }
       )
@@ -95,7 +114,7 @@ export function MessageBoard({
     return () => {
       supabaseRef.current.removeChannel(channel);
     };
-  }, [productId, isMember, currentUserId]);
+  }, [productId, isMember, currentUserId, markAsRead]);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -115,24 +134,19 @@ export function MessageBoard({
     }
   };
 
-  const markAsRead = async () => {
-    try {
-      await fetch(`/api/groups/${productId}/read`, { method: "POST" });
-    } catch {
-      // Silently fail
-    }
-  };
-
   const handleSend = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newMessage.trim() || sending) return;
 
+    const messageContent = newMessage.trim();
     setSending(true);
+    setNewMessage(""); // Clear immediately for better UX
+    
     try {
       const res = await fetch(`/api/groups/${productId}/messages`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: newMessage.trim() }),
+        body: JSON.stringify({ content: messageContent }),
       });
 
       if (!res.ok) {
@@ -140,11 +154,11 @@ export function MessageBoard({
         throw new Error(data.error || "Failed to send");
       }
 
-      const data = await res.json();
-      setMessages((prev) => [...prev, data.message]);
-      setNewMessage("");
+      // Don't add message here - let realtime handle it to avoid duplicates
+      // The realtime subscription will add the message
     } catch (err: any) {
       toast.error(err.message || "Failed to send message");
+      setNewMessage(messageContent); // Restore message on error
     } finally {
       setSending(false);
     }

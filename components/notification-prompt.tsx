@@ -4,11 +4,36 @@ import { useState, useEffect } from "react";
 import { Bell, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
+// Check if it's Safari on iOS (which doesn't support web notifications without PWA)
+const isIOSSafari = () => {
+  if (typeof window === "undefined") return false;
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+  const webkit = !!ua.match(/WebKit/i);
+  const iOSSafari = iOS && webkit && !ua.match(/CriOS/i) && !ua.match(/FxiOS/i);
+  return iOSSafari;
+};
+
+// Check if running as PWA (standalone mode)
+const isPWA = () => {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(display-mode: standalone)").matches ||
+    (window.navigator as any).standalone === true;
+};
+
 export function NotificationPrompt() {
   const [show, setShow] = useState(false);
   const [permission, setPermission] = useState<NotificationPermission>("default");
+  const [isIOS, setIsIOS] = useState(false);
 
   useEffect(() => {
+    // Check for iOS Safari
+    if (isIOSSafari() && !isPWA()) {
+      setIsIOS(true);
+      // Don't show notification prompt on iOS Safari (not supported)
+      return;
+    }
+
     if (!("Notification" in window)) return;
 
     setPermission(Notification.permission);
@@ -23,16 +48,21 @@ export function NotificationPrompt() {
   }, []);
 
   const handleEnable = async () => {
-    const result = await Notification.requestPermission();
-    setPermission(result);
-    setShow(false);
+    try {
+      const result = await Notification.requestPermission();
+      setPermission(result);
+      setShow(false);
 
-    if (result === "granted") {
-      // Show a test notification
-      new Notification("Notifications enabled!", {
-        body: "You'll now receive updates when someone messages in your groups.",
-        icon: "/favicon.svg",
-      });
+      if (result === "granted") {
+        // Show a test notification
+        new Notification("Notifications enabled!", {
+          body: "You'll now receive updates when someone messages in your groups.",
+          icon: "/favicon.svg",
+        });
+      }
+    } catch (e) {
+      console.warn("Notification permission error:", e);
+      setShow(false);
     }
   };
 
@@ -41,6 +71,8 @@ export function NotificationPrompt() {
     localStorage.setItem("notification-prompt-dismissed", "true");
   };
 
+  // Don't show on iOS Safari (not supported without PWA)
+  if (isIOS) return null;
   if (!show || permission !== "default") return null;
 
   return (

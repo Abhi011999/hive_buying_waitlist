@@ -3,12 +3,33 @@
 import { useEffect, useCallback, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 
+// Check if notifications are supported
+const isNotificationSupported = () => {
+  if (typeof window === "undefined") return false;
+  return "Notification" in window;
+};
+
+// Check if it's Safari on iOS (which doesn't support web notifications without PWA)
+const isIOSSafari = () => {
+  if (typeof window === "undefined") return false;
+  const ua = window.navigator.userAgent;
+  const iOS = !!ua.match(/iPad/i) || !!ua.match(/iPhone/i);
+  const webkit = !!ua.match(/WebKit/i);
+  const iOSSafari = iOS && webkit && !ua.match(/CriOS/i) && !ua.match(/FxiOS/i);
+  return iOSSafari;
+};
+
 export function useNotifications() {
   const permissionRef = useRef<NotificationPermission>("default");
 
   // Request notification permission
   const requestPermission = useCallback(async () => {
-    if (typeof window === "undefined" || !("Notification" in window)) {
+    if (!isNotificationSupported()) {
+      return false;
+    }
+
+    // iOS Safari doesn't support notifications outside of PWA
+    if (isIOSSafari()) {
       return false;
     }
 
@@ -29,24 +50,30 @@ export function useNotifications() {
   // Show a notification
   const showNotification = useCallback(
     (title: string, options?: NotificationOptions) => {
+      if (!isNotificationSupported()) return;
       if (permissionRef.current !== "granted") return;
 
-      const notification = new Notification(title, {
-        icon: "/favicon.svg",
-        badge: "/favicon.svg",
-        ...options,
-      });
+      try {
+        const notification = new Notification(title, {
+          icon: "/favicon.svg",
+          badge: "/favicon.svg",
+          ...options,
+        });
 
-      notification.onclick = () => {
-        window.focus();
-        notification.close();
-        if (options?.data?.url) {
-          window.location.href = options.data.url;
-        }
-      };
+        notification.onclick = () => {
+          window.focus();
+          notification.close();
+          if (options?.data?.url) {
+            window.location.href = options.data.url;
+          }
+        };
 
-      // Auto close after 5 seconds
-      setTimeout(() => notification.close(), 5000);
+        // Auto close after 5 seconds
+        setTimeout(() => notification.close(), 5000);
+      } catch (e) {
+        // Safari might throw on some notification options
+        console.warn("Notification error:", e);
+      }
     },
     []
   );
@@ -56,7 +83,7 @@ export function useNotifications() {
 
 // Component to handle real-time notifications
 export function NotificationProvider({ children }: { children: React.ReactNode }) {
-  const { requestPermission, showNotification } = useNotifications();
+  const { showNotification } = useNotifications();
   const supabaseRef = useRef(createClient());
   const userIdRef = useRef<string | null>(null);
   const userGroupsRef = useRef<string[]>([]);
@@ -73,8 +100,8 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) return;
 
-      // Only request permission after confirming user is logged in
-      requestPermission();
+      // Don't auto-request permission - let the NotificationPrompt handle it
+      // Just set up the subscription for when permission is granted
 
       userIdRef.current = user.id;
 
@@ -108,7 +135,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
             if (document.hasFocus()) return;
 
             // Check permission before making API calls
-            if (Notification.permission !== "granted") return;
+            if (!isNotificationSupported() || Notification.permission !== "granted") return;
 
             // Get sender's profile
             const { data: profile } = await supabase
@@ -144,7 +171,7 @@ export function NotificationProvider({ children }: { children: React.ReactNode }
     };
 
     setup();
-  }, [requestPermission, showNotification]);
+  }, [showNotification]);
 
   return <>{children}</>;
 }
