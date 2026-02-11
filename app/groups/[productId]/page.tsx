@@ -4,6 +4,7 @@ import Header from "@/components/header";
 import { Breadcrumb } from "@/components/breadcrumb";
 import { MessageBoard } from "@/components/message-board";
 import { GroupPageClient } from "./client";
+import { ProductImageSlider } from "@/components/product-image-slider";
 import {
   Users,
   Tag,
@@ -21,26 +22,42 @@ export default async function GroupPage({
   const { productId } = await params;
   const supabase = await createClient();
 
-  // Fetch product with category
-  const { data: product } = await supabase
-    .from("products")
-    .select("*, categories(*)")
-    .eq("id", productId)
-    .single();
+  // Parallelize all data fetching to reduce waterfall
+  const [
+    productResult,
+    memberCountResult,
+    authResult,
+    imagesResult,
+  ] = await Promise.all([
+    // Fetch product with category
+    supabase
+      .from("products")
+      .select("id, name, brand, description, image_url, discount_label, target_group_size, categories(id, name, slug)")
+      .eq("id", productId)
+      .single(),
+    // Get member count
+    supabase
+      .from("group_members")
+      .select("*", { count: "exact", head: true })
+      .eq("product_id", productId),
+    // Check if current user is logged in
+    supabase.auth.getUser(),
+    // Fetch product images
+    supabase
+      .from("product_images")
+      .select("id, image_url, display_order")
+      .eq("product_id", productId)
+      .order("display_order"),
+  ]);
 
+  const product = productResult.data;
   if (!product) notFound();
 
-  // Get member count
-  const { count: memberCount } = await supabase
-    .from("group_members")
-    .select("*", { count: "exact", head: true })
-    .eq("product_id", productId);
+  const memberCount = memberCountResult.count;
+  const user = authResult.data?.user;
+  const productImages = imagesResult.data || [];
 
-  // Check if current user is a member
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
+  // Check membership if user is logged in
   let isMember = false;
   if (user) {
     const { data: membership } = await supabase
@@ -48,16 +65,16 @@ export default async function GroupPage({
       .select("id")
       .eq("product_id", productId)
       .eq("user_id", user.id)
-      .single();
+      .maybeSingle();
     isMember = !!membership;
   }
 
   const cat = product.categories as any;
 
   return (
-    <main className="min-h-screen bg-white pb-20 sm:pb-0">
+    <main className="min-h-screen bg-background pb-20 sm:pb-0">
       <Header />
-      <div className="mx-auto max-w-3xl px-4 pt-24 sm:px-6 sm:pt-28">
+      <div className="mx-auto max-w-3xl px-4 pt-24 pb-12 sm:px-6 sm:pt-28 sm:pb-16">
         <Breadcrumb
           items={[
             { label: "Explore", href: "/explore" },
@@ -69,31 +86,25 @@ export default async function GroupPage({
         />
 
         {/* Product header card */}
-        <div className="mt-4 flex flex-col gap-4 rounded-2xl border-2 border-black/10 bg-gradient-to-br from-amber-50/60 to-white p-5 sm:flex-row sm:p-6">
-          {/* Image */}
-          <div className="flex h-40 items-center justify-center sm:h-auto sm:w-48">
-            {product.image_url ? (
-              <img
-                src={product.image_url}
-                alt={product.name}
-                className="h-full w-full rounded-xl border border-black/10 object-cover"
-              />
-            ) : (
-              <div className="flex h-full w-full items-center justify-center rounded-xl border-2 border-dashed border-black/15 bg-black/5 text-5xl">
-                {product.brand?.charAt(0) || "?"}
-              </div>
-            )}
+        <div className="mt-4 flex flex-col gap-4 rounded-2xl border-2 border-border bg-card p-5 sm:flex-row sm:p-6">
+          {/* Image Slider */}
+          <div className="h-56 sm:h-auto sm:w-56 sm:min-h-[200px]">
+            <ProductImageSlider
+              images={productImages}
+              productName={product.name}
+              fallbackImage={product.image_url}
+            />
           </div>
 
           {/* Info */}
           <div className="flex flex-1 flex-col justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-black">{product.name}</h1>
+              <h1 className="text-2xl font-bold text-foreground">{product.name}</h1>
               {product.brand && (
-                <p className="text-sm text-black/50">{product.brand}</p>
+                <p className="text-sm text-foreground/50">{product.brand}</p>
               )}
               {product.description && (
-                <p className="mt-2 text-sm text-black/60">
+                <p className="mt-2 text-sm text-foreground/60">
                   {product.description}
                 </p>
               )}
@@ -108,7 +119,7 @@ export default async function GroupPage({
 
             {/* Stats */}
             <div className="mt-3 flex flex-wrap gap-3">
-              <div className="flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1 text-xs font-medium text-black/70">
+              <div className="flex items-center gap-1.5 rounded-full bg-accent/30 px-3 py-1 text-xs font-medium text-foreground/70">
                 <Target className="h-3.5 w-3.5" />
                 Target: {product.target_group_size}
               </div>
@@ -120,15 +131,15 @@ export default async function GroupPage({
 
             {/* Trust badges */}
             <div className="mt-3 flex items-center gap-3">
-              <div className="flex items-center gap-1 text-xs text-black/40">
+              <div className="flex items-center gap-1 text-xs text-foreground/40">
                 <Shield className="h-3.5 w-3.5" />
                 Verified
               </div>
-              <div className="flex items-center gap-1 text-xs text-black/40">
+              <div className="flex items-center gap-1 text-xs text-foreground/40">
                 <Lock className="h-3.5 w-3.5" />
                 Secure
               </div>
-              <div className="flex items-center gap-1 text-xs text-black/40">
+              <div className="flex items-center gap-1 text-xs text-foreground/40">
                 <BadgeCheck className="h-3.5 w-3.5" />
                 Trusted
               </div>
@@ -155,8 +166,8 @@ export default async function GroupPage({
         />
 
         {/* Discussion section */}
-        <div className="mt-6 mb-8">
-          <h2 className="mb-3 text-lg font-bold text-black">Discussion</h2>
+        <div className="mt-6">
+          <h2 className="mb-3 text-lg font-bold text-foreground">Discussion</h2>
           <MessageBoard
             productId={productId}
             currentUserId={user?.id || null}

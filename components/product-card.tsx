@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, memo } from "react";
 import { Users, Shield, Lock, BadgeCheck, Tag } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { IntentModal } from "@/components/intent-modal";
+import { ProductImageSlider } from "@/components/product-image-slider";
 
 type Product = {
   id: string;
@@ -16,31 +17,33 @@ type Product = {
   discount_label: string | null;
 };
 
-export function ProductCard({
+type ProductImage = {
+  id: string;
+  image_url: string;
+  display_order: number;
+};
+
+function ProductCardComponent({
   product,
   memberCount,
+  images = [],
 }: {
   product: Product;
   memberCount: number;
+  images?: ProductImage[];
 }) {
   const [showIntent, setShowIntent] = useState(false);
 
   return (
     <>
-      <div className="flex flex-col overflow-hidden rounded-2xl border-2 border-black/10 bg-gradient-to-br from-amber-50/60 to-white transition hover:shadow-lg sm:flex-row">
-        {/* Left: Product image */}
-        <div className="relative flex h-48 items-center justify-center bg-white/60 p-4 sm:h-auto sm:w-64 sm:min-h-[220px]">
-          {product.image_url ? (
-            <img
-              src={product.image_url}
-              alt={product.name}
-              className="h-full w-full rounded-xl border border-black/10 object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center rounded-xl border-2 border-dashed border-black/15 bg-black/5 text-5xl">
-              {product.brand?.charAt(0) || "?"}
-            </div>
-          )}
+      <div className="flex flex-col overflow-hidden rounded-2xl border-2 border-border bg-card transition hover:shadow-lg sm:flex-row">
+        {/* Left: Product image slider */}
+        <div className="relative h-64 bg-accent/20 p-4 sm:h-auto sm:w-64 sm:min-h-[260px]">
+          <ProductImageSlider
+            images={images}
+            productName={product.name}
+            fallbackImage={product.image_url}
+          />
         </div>
 
         {/* Right: Stats and info */}
@@ -49,18 +52,18 @@ export function ProductCard({
           <div>
             <div className="flex items-start justify-between gap-2">
               <div>
-                <h3 className="text-lg font-bold text-black sm:text-xl">
+                <h3 className="text-lg font-bold text-foreground sm:text-xl">
                   {product.name}
                 </h3>
                 {product.brand && (
-                  <p className="text-sm text-black/50">{product.brand}</p>
+                  <p className="text-sm text-foreground/50">{product.brand}</p>
                 )}
               </div>
             </div>
 
             {/* Stats row */}
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              <div className="flex items-center gap-1.5 rounded-full bg-black/5 px-3 py-1 text-xs font-medium text-black/70">
+              <div className="flex items-center gap-1.5 rounded-full bg-foreground/5 px-3 py-1 text-xs font-medium text-foreground/70">
                 <Users className="h-3.5 w-3.5" />
                 Target: {product.target_group_size} members
               </div>
@@ -80,22 +83,22 @@ export function ProductCard({
 
             {/* Description */}
             {product.description && (
-              <p className="mt-2 text-sm text-black/60 line-clamp-2">
+              <p className="mt-2 text-sm text-foreground/60 line-clamp-2">
                 {product.description}
               </p>
             )}
 
             {/* Trust icons */}
             <div className="mt-3 flex items-center gap-3">
-              <div className="flex items-center gap-1 text-xs text-black/40">
+              <div className="flex items-center gap-1 text-xs text-foreground/40">
                 <Shield className="h-3.5 w-3.5" />
                 Verified
               </div>
-              <div className="flex items-center gap-1 text-xs text-black/40">
+              <div className="flex items-center gap-1 text-xs text-foreground/40">
                 <Lock className="h-3.5 w-3.5" />
                 Secure
               </div>
-              <div className="flex items-center gap-1 text-xs text-black/40">
+              <div className="flex items-center gap-1 text-xs text-foreground/40">
                 <BadgeCheck className="h-3.5 w-3.5" />
                 Trusted
               </div>
@@ -106,7 +109,7 @@ export function ProductCard({
           <div className="mt-4">
             <Button
               onClick={() => setShowIntent(true)}
-              className="rounded-full bg-black px-6 text-sm font-semibold text-white hover:bg-black/80"
+              className="rounded-full border-2 border-foreground bg-foreground px-6 text-sm font-semibold text-background hover:bg-background hover:text-foreground"
             >
               Team up to buy
             </Button>
@@ -123,3 +126,6 @@ export function ProductCard({
     </>
   );
 }
+
+// Export memoized version to prevent unnecessary re-renders in lists
+export const ProductCard = memo(ProductCardComponent);

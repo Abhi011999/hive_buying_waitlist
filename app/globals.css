@@ -4,69 +4,74 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 240 10% 3.9%;
+    /* Base colors: #B9C4C8 and white */
+    --background: 195 11% 75%; /* #B9C4C8 */
+    --foreground: 200 17% 12%; /* #1a2226 - dark text */
 
-    --card: 0 0% 100%;
-    --card-foreground: 240 10% 3.9%;
+    --card: 0 0% 100%; /* white */
+    --card-foreground: 200 17% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 240 10% 3.9%;
+    --popover-foreground: 200 17% 12%;
 
-    --primary: 240 5.9% 10%;
-    --primary-foreground: 0 0% 98%;
+    /* Primary: #1a2226 */
+    --primary: 200 17% 12%;
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 240 4.8% 95.9%;
-    --secondary-foreground: 240 5.9% 10%;
+    /* Secondary/Muted: #B9C4C8 */
+    --secondary: 195 11% 75%;
+    --secondary-foreground: 200 17% 12%;
 
-    --muted: 240 4.8% 95.9%;
-    --muted-foreground: 240 3.8% 46.1%;
+    --muted: 195 11% 85%;
+    --muted-foreground: 200 17% 12%;
 
-    --accent: 240 4.8% 95.9%;
-    --accent-foreground: 240 5.9% 10%;
+    /* Accent: #B9C4C8 */
+    --accent: 195 11% 75%;
+    --accent-foreground: 200 17% 12%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 98%;
 
-    --border: 240 5.9% 90%;
-    --input: 240 5.9% 90%;
-    --ring: 240 10% 3.9%;
+    --border: 195 11% 75%;
+    --input: 195 11% 85%;
+    --ring: 200 17% 12%;
 
-    --brand-blue: 200 100% 68%;
-    --theme-yellow-bg: 54 100% 62%;
-    --theme-blue-bg: 186 35% 47%;
+    --brand-blue: 195 11% 75%;
+    --theme-base: 195 11% 75%;
 
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 46 100% 51%;
-    --foreground: 0 0% 0%;
+    /* Dark mode - #1a2226 background, #B9C4C8 text */
+    --background: 200 17% 12%;
+    --foreground: 195 11% 75%;
 
-    --card: 46 95% 55%;
-    --card-foreground: 0 0% 0%;
+    --card: 200 15% 16%;
+    --card-foreground: 195 11% 75%;
 
-    --popover: 46 95% 55%;
-    --popover-foreground: 0 0% 0%;
+    --popover: 200 15% 16%;
+    --popover-foreground: 195 11% 75%;
 
-    --primary: 0 0% 0%;
-    --primary-foreground: 46 100% 51%;
+    /* Primary: #B9C4C8 in dark mode */
+    --primary: 195 11% 75%;
+    --primary-foreground: 200 17% 12%;
 
-    --secondary: 46 100% 51%;
-    --secondary-foreground: 0 0% 0%;
+    --secondary: 200 15% 20%;
+    --secondary-foreground: 195 11% 75%;
 
-    --muted: 46 80% 60%;
-    --muted-foreground: 0 0% 20%;
+    --muted: 200 12% 22%;
+    --muted-foreground: 195 11% 60%;
 
-    --accent: 0 0% 0%;
-    --accent-foreground: 46 100% 51%;
+    --accent: 195 11% 75%;
+    --accent-foreground: 200 17% 12%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 46 100% 51%;
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 0 0% 98%;
 
-    --border: 0 0% 15%;
-    --input: 46 85% 45%;
-    --ring: 0 0% 0%;
+    --border: 200 12% 22%;
+    --input: 200 12% 22%;
+    --ring: 195 11% 75%;
   }
 }
 
@@ -81,14 +86,14 @@
 
 body {
   ::selection {
-    @apply bg-black text-yellow-400;
+    @apply bg-primary text-white;
   }
 }
 
 /* Minimal scrollbar styling - Industry standard 2025 */
 .custom-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(0, 0, 0, 0.4) transparent;
+  scrollbar-color: hsl(200 17% 12% / 0.4) transparent;
 }
 
 /* WebKit browsers (Chrome, Safari, Edge) */
@@ -101,26 +106,26 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: hsl(200 17% 12% / 0.4);
   border-radius: 3px;
   transition: background-color 0.2s ease;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(0, 0, 0, 0.6);
+  background-color: hsl(200 17% 12% / 0.6);
 }
 
 /* Dark mode scrollbar */
 .dark .custom-scrollbar {
-  scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+  scrollbar-color: hsl(195 11% 75% / 0.4) transparent;
 }
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb {
-  background-color: rgba(255, 255, 255, 0.4);
+  background-color: hsl(195 11% 75% / 0.4);
 }
 
 .dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: hsl(195 11% 75% / 0.6);
 }
 
 /* Brand logos infinite scroll animation */

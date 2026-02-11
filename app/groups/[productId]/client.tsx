@@ -21,8 +21,8 @@ export function GroupPageClient({
 
   if (isMember) {
     return (
-      <div className="mt-4 rounded-xl bg-black/5 px-5 py-3 text-center">
-        <p className="text-sm font-medium text-black/60">
+      <div className="mt-4 rounded-xl bg-foreground/5 px-5 py-3 text-center">
+        <p className="text-sm font-medium text-foreground/60">
           You&apos;re a member of this group
         </p>
       </div>
@@ -35,7 +35,7 @@ export function GroupPageClient({
         <Button
           onClick={() => setShowIntent(true)}
           size="lg"
-          className="rounded-full bg-black px-8 text-sm font-semibold text-white hover:bg-black/80"
+          className="rounded-full border-2 border-foreground bg-foreground px-8 text-sm font-semibold text-background hover:bg-background hover:text-foreground"
         >
           Team up to buy
         </Button>

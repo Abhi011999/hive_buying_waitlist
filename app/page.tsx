@@ -1,12 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { toast } from "sonner";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { FaWhatsapp } from "react-icons/fa6";
-import CTA from "@/components/cta";
-import Form from "@/components/form";
 import HowItWorks from "@/components/how-it-works";
 import Particles from "@/components/ui/particles";
 import Header from "@/components/header";
@@ -14,20 +10,11 @@ import Footer from "@/components/footer";
 import { PopularProducts } from "@/components/popular-products";
 import { BrandLogos } from "@/components/brand-logos";
 import { BrandGallery } from "@/components/brand-gallery";
-// import WhatsappFloatingWidget from "@/components/whatsapp-floating-widget";
-import ScrollCTABar from "@/components/scroll-cta-bar";
+import TextBlur from "@/components/ui/text-blur";
+import { FlipWords } from "@/components/ui/flip-words";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
 
 export default function Home() {
-  const [name, setName] = useState<string>("");
-  const [mobile, setMobile] = useState<string>("");
-  const [product, setProduct] = useState<string>("");
-  const [location, setLocation] = useState<string>("");
-  const [note, setNote] = useState<string>("");
-  const [loading, setLoading] = useState<boolean>(false);
-  const [submitted, setSubmitted] = useState<boolean>(false);
-  const [recaptchaToken, setRecaptchaToken] = useState<string>("");
-
   const users = [
     {
       id: 1,
@@ -47,135 +34,76 @@ export default function Home() {
     },
   ];
 
-  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setName(event.target.value);
-  };
-
-  const handleMobileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value.replace(/\D/g, "").slice(0, 10);
-    setMobile(value);
-  };
-
-  const handleProductChange = (value: string) => {
-    setProduct(value);
-  };
-
-  const handleLocationChange = (value: string) => {
-    setLocation(value);
-  };
-
-  const handleNoteChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNote(event.target.value);
-  };
-
-  const handleRecaptchaVerify = (token: string) => {
-    setRecaptchaToken(token);
-  };
-
-  const handleSubmit = async () => {
-    if (!name) {
-      toast.error("Please enter your name 😠");
-      return;
-    }
-
-    if (!mobile) {
-      toast.error("Please enter your mobile number 😠");
-      return;
-    }
-
-    if (!product) {
-      toast.error("Please select a product category 😠");
-      return;
-    }
-
-    if (!location) {
-      toast.error("Please select your location 😠");
-      return;
-    }
-
-    if (!recaptchaToken) {
-      toast.error("Please verify you're not a robot 🤖");
-      return;
-    }
-
-    setLoading(true);
-
-    const promise = new Promise(async (resolve, reject) => {
-      try {
-        const response = await fetch("/api/notion/popup", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ name, mobile, product, location, note, recaptchaToken }),
-        });
-
-        if (!response.ok) {
-          if (response.status === 429) {
-            reject("Rate limited");
-          } else {
-            reject("Submission failed");
-          }
-        } else {
-          resolve({});
-        }
-      } catch (error) {
-        reject(error);
-      }
-    });
-
-    toast.promise(promise, {
-      loading: "Submitting your details... 🚀",
-      success: (data) => {
-        setName("");
-        setMobile("");
-        setProduct("");
-        setLocation("");
-        setNote("");
-        setRecaptchaToken("");
-        setSubmitted(true);
-        return "Thanks! We'll reach out soon 🎉";
-      },
-      error: (error) => {
-        if (error === "Rate limited") {
-          return "You're doing that too much. Please try again later";
-        } else if (error === "Submission failed") {
-          return "Failed to save your details. Please try again 😢.";
-        }
-        return "An error occurred. Please try again 😢.";
-      },
-    });
-
-    promise.finally(() => {
-      setLoading(false);
-    });
-  };
-
   return (
-    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip py-8 sm:py-0">
+    <main className="flex min-h-screen flex-col items-center justify-center overflow-x-clip">
       <Header />
       
-      <section className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-16 lg:gap-24 xl:gap-40 px-4 sm:px-6 lg:px-12 xl:px-16 mt-20 sm:mt-24 lg:mt-32 xl:mt-40 mb-12 sm:mb-16 lg:mb-20 xl:mb-24 w-full max-w-[90rem]">
-        {/* Left side - CTA */}
-        <div className="flex flex-col items-center lg:items-start lg:flex-1">
-          <CTA />
+      {/* Hero Section with Background Image */}
+      <section className="relative w-full min-h-screen flex items-center justify-center">
+        {/* Background Image - Landscape for desktop, Portrait for mobile */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat md:hidden"
+          style={{ backgroundImage: "url('/hero-portrait.jpg')" }}
+        />
+        <div 
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat hidden md:block"
+          style={{ backgroundImage: "url('/hero-landscape.jpg')" }}
+        />
+        
+        {/* Black overlay for better text readability */}
+        <div className="absolute inset-0 bg-black/65" />
+        
+        {/* Content */}
+        <div className="relative z-10 flex flex-col items-center px-6 sm:px-8 lg:px-16 xl:px-24 py-32 w-full max-w-6xl">
+          <motion.div
+            className="flex w-full max-w-4xl flex-col gap-1 sm:gap-2"
+            variants={containerVariants}
+            initial="hidden"
+            animate="visible"
+          >
+            <motion.div variants={itemVariants}>
+              <h1 className="text-center text-4xl font-medium tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-white">
+                <FlipWords 
+                  words={["Team Up & Pay Less!", "Better Together!", "Enjoy Savings with Strangers!"]} 
+                  duration={3000}
+                  className="text-white"
+                />
+              </h1>
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <TextBlur
+                className="mx-auto max-w-[38rem] pt-2 text-center text-base sm:text-lg md:text-xl text-white/90"
+                text="We help you pay less by not buying alone."
+                duration={0.8}
+              />
+            </motion.div>
+
+            <motion.div variants={itemVariants}>
+              <TextBlur
+                className="mx-auto max-w-[38rem] pt-1 text-center text-sm sm:text-base md:text-lg text-white/80"
+                text="When people who want the same product come together and buy as a group, everyone gets a better price than buying alone."
+                duration={0.8}
+              />
+            </motion.div>
+          </motion.div>
 
           <motion.div
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="mt-6 sm:mt-8"
+            className="mt-8 sm:mt-10"
           >
             <motion.div
               variants={itemVariants}
-              className="flex flex-row items-center justify-center lg:justify-start mb-1 gap-1"
+              className="flex flex-row items-center justify-center mb-2 gap-1"
             >
-              {users.map((user, idx) => (
+              {users.map((user) => (
                 <img
                   key={user.id}
                   src={user.image}
                   alt={`User ${user.id}`}
-                  className="h-8 w-8 sm:h-10 sm:w-10 rounded-full border-2 border-white object-cover -ml-2 first:ml-0"
+                  className="h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-white object-cover -ml-3 first:ml-0"
                 />
               ))}
             </motion.div>
@@ -185,14 +113,14 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="mt-1 sm:mt-1.5"
+            className="mt-2"
           >
             <motion.div
               variants={itemVariants}
-              className="flex items-center justify-center lg:justify-start"
+              className="flex items-center justify-center"
             >
-              <div className="flex w-fit items-center justify-center rounded-full border border-black-200 bg-transparent text-center">
-                <div className="px-3 py-1 text-xs sm:px-4 sm:py-1.5 sm:text-sm font-medium">
+              <div className="flex w-fit items-center justify-center rounded-full border border-white/30 bg-white/10 backdrop-blur-sm text-center">
+                <div className="px-4 py-1.5 text-sm sm:text-base font-medium text-white">
                   🎉 12309+ people already joined
                 </div>
               </div>
@@ -203,40 +131,22 @@ export default function Home() {
             variants={containerVariants}
             initial="hidden"
             animate="visible"
-            className="mt-4 sm:mt-6"
+            className="mt-6"
           >
             <motion.div
               variants={itemVariants}
-              className="flex items-center justify-center lg:justify-start gap-1 text-xs sm:text-sm text-muted-foreground">
+              className="flex items-center justify-center gap-2 text-sm sm:text-base text-white/70"
+            >
               <p>For any queries, reach out at </p>
               <Link
                 href="https://wa.link/5vzeno"
                 rel="noopener noreferrer"
-                target="_blank">
-                <FaWhatsapp className="h-4 w-4 sm:h-5 sm:w-5 transition-all duration-200 ease-linear hover:text-black" />
+                target="_blank"
+              >
+                <FaWhatsapp className="h-5 w-5 sm:h-6 sm:w-6 transition-all duration-200 ease-linear hover:text-white text-white/70" />
               </Link>
             </motion.div>
           </motion.div>
-        </div>
-
-        {/* Right side - Form */}
-        <div className="flex flex-col items-center lg:items-start lg:flex-1 lg:max-w-md mb-12 sm:mb-16 lg:mb-0">
-          <Form
-            name={name}
-            mobile={mobile}
-            product={product}
-            location={location}
-            note={note}
-            handleNameChange={handleNameChange}
-            handleMobileChange={handleMobileChange}
-            handleProductChange={handleProductChange}
-            handleLocationChange={handleLocationChange}
-            handleNoteChange={handleNoteChange}
-            handleSubmit={handleSubmit}
-            handleRecaptchaVerify={handleRecaptchaVerify}
-            loading={loading}
-            submitted={submitted}
-          />
         </div>
       </section>
 
@@ -254,13 +164,11 @@ export default function Home() {
         quantityDesktop={350}
         quantityMobile={100}
         ease={80}
-        color={"#000000"}
+        color={"#1a2226"}
         refresh
       />
 
       <Footer />
-
-      <ScrollCTABar />
       {/* <WhatsappFloatingWidget /> */}
     </main>
   );

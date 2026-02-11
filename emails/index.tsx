@@ -65,18 +65,18 @@ NotionWaitlistEmail.PreviewProps = {
 export default NotionWaitlistEmail;
 
 const main = {
-  background: "#000000",
+  background: "#1a2226",
   fontFamily: 'figtree, "Helvetica Neue", Helvetica, Arial, sans-serif',
   padding: "40px 0",
-  color: "#cccccc",
+  color: "#B9C4C8",
 };
 
 const container = {
   margin: "0 auto",
   padding: "24px 32px 48px",
-  backgroundColor: "#000000",
+  backgroundColor: "#1a2226",
   borderRadius: "12px",
-  boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
+  boxShadow: "0 4px 20px rgba(26, 34, 38, 0.3)",
   maxWidth: "600px",
 };
 
@@ -89,7 +89,7 @@ const heading = {
   fontSize: "24px",
   fontWeight: "bold",
   textAlign: "center" as const,
-  color: "#ffffff",
+  color: "#f0f4f5",
   marginBottom: "24px",
   marginTop: "0",
 };
@@ -106,8 +106,9 @@ const paragraph = {
 };
 
 const link = {
-  color: "#F7FF9B",
+  color: "#B9C4C8",
   textDecoration: "underline",
+  fontWeight: "500",
 };
 
 const signOff = {
@@ -117,11 +118,12 @@ const signOff = {
 };
 
 const hr = {
-  borderColor: "#cccccc",
+  borderColor: "#B9C4C8",
   margin: "20px 0",
+  opacity: "0.3",
 };
 
 const footer = {
-  color: "#8c8c8c",
+  color: "#95A4AB",
   fontSize: "12px",
 };

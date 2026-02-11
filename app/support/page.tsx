@@ -48,14 +48,14 @@ export default function SupportPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white pb-20 sm:pb-0">
+    <main className="min-h-screen bg-background pb-20 sm:pb-0">
       <Header />
       <div className="mx-auto max-w-2xl px-4 pt-24 sm:px-6 sm:pt-28">
         <div className="mb-8 text-center">
-          <h1 className="text-3xl font-bold text-black sm:text-4xl">
+          <h1 className="text-3xl font-bold text-foreground sm:text-4xl">
             Support
           </h1>
-          <p className="mt-2 text-base text-black/60">
+          <p className="mt-2 text-base text-foreground/60">
             Need help? Reach out to our team and we&apos;ll get back to you as soon as possible.
           </p>
         </div>
@@ -79,21 +79,21 @@ export default function SupportPage() {
 
           <a
             href="mailto:support@hivebuying.com"
-            className="flex items-center gap-4 rounded-2xl border-2 border-black/10 bg-black/5 p-5 transition hover:border-black/20 hover:shadow-md"
+            className="flex items-center gap-4 rounded-2xl border-2 border-border bg-accent/20 p-5 transition hover:border-accent hover:shadow-md"
           >
-            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-black text-white">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-primary-foreground">
               <Mail className="h-6 w-6" />
             </div>
             <div>
-              <p className="font-semibold text-black">Email Us</p>
-              <p className="text-sm text-black/60">support@hivebuying.com</p>
+              <p className="font-semibold text-foreground">Email Us</p>
+              <p className="text-sm text-foreground/60">support@hivebuying.com</p>
             </div>
           </a>
         </div>
 
         {/* Contact form */}
-        <div className="rounded-2xl border-2 border-black/10 p-6 sm:p-8">
-          <h2 className="mb-6 text-xl font-bold text-black">
+        <div className="rounded-2xl border-2 border-border p-6 sm:p-8">
+          <h2 className="mb-6 text-xl font-bold text-foreground">
             Send us a message
           </h2>
 
@@ -102,10 +102,10 @@ export default function SupportPage() {
               <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-green-100">
                 <Send className="h-8 w-8 text-green-600" />
               </div>
-              <h3 className="text-lg font-semibold text-black">
+              <h3 className="text-lg font-semibold text-foreground">
                 Message Sent!
               </h3>
-              <p className="mt-2 text-sm text-black/60">
+              <p className="mt-2 text-sm text-foreground/60">
                 Our team will get back to you within 24 hours.
               </p>
               <Button
@@ -188,9 +188,9 @@ export default function SupportPage() {
 
         {/* FAQ link */}
         <div className="mt-6 text-center">
-          <p className="text-sm text-black/50">
+          <p className="text-sm text-foreground/50">
             Looking for answers?{" "}
-            <Link href="/faqs" className="font-medium text-black underline underline-offset-4">
+            <Link href="/faqs" className="font-medium text-foreground underline underline-offset-4">
               Check our FAQs
             </Link>
           </p>

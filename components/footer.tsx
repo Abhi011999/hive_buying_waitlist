@@ -16,7 +16,7 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
           {/* Left side - Logo and copyright */}
           <motion.div variants={itemVariants} className="flex flex-col gap-1.5">
-            <div className="text-xs text-gray-600">
+            <div className="text-xs text-muted-foreground">
               <p>Copyright © 2025 HiveBuying</p>
               <p>All rights reserved</p>
             </div>
@@ -30,7 +30,7 @@ export default function Footer() {
                 href="https://x.com/hivebuying?s=21"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-black transition-colors duration-200"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <FaXTwitter size={18} />
               </Link>
@@ -38,7 +38,7 @@ export default function Footer() {
                 href="https://www.instagram.com/hivebuying/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-black transition-colors duration-200"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <FaInstagram size={18} />
               </Link>
@@ -46,7 +46,7 @@ export default function Footer() {
                 href="https://www.youtube.com/@Hivebuying"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-gray-600 hover:text-black transition-colors duration-200"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <FaYoutube size={20} />
               </Link>
@@ -56,12 +56,12 @@ export default function Footer() {
             <div className="flex gap-4 sm:gap-6">
               <Link
                 href="/faqs"
-                className="text-xs text-gray-600 hover:text-black transition-colors duration-200 underline underline-offset-2">
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 underline underline-offset-2">
                 FAQs
               </Link>
               <Link
                 href="/privacy"
-                className="text-xs text-gray-600 hover:text-black transition-colors duration-200 underline underline-offset-2">
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 underline underline-offset-2">
                 Privacy Policy
               </Link>
             </div>

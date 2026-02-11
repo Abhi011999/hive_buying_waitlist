@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Users, ChevronRight, Tag } from "lucide-react";
 import { useUnreadMessages } from "@/hooks/use-unread-messages";
+import { memo } from "react";
 
 type GroupCardProps = {
   membership: {
@@ -20,7 +21,7 @@ type GroupCardProps = {
   lastMessage?: { content: string; created_at: string };
 };
 
-export function GroupCard({ membership, memberCount, lastMessage }: GroupCardProps) {
+function GroupCardComponent({ membership, memberCount, lastMessage }: GroupCardProps) {
   const { unreadCounts } = useUnreadMessages();
   const product = membership.products;
   const unreadCount = unreadCounts[product.id] || 0;
@@ -28,7 +29,7 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
   return (
     <Link
       href={`/groups/${product.id}`}
-      className="relative flex items-center gap-4 rounded-2xl border-2 border-black/10 p-4 transition hover:border-black/20 hover:shadow-md"
+      className="relative flex items-center gap-4 rounded-2xl border-2 border-border p-4 transition hover:border-accent hover:shadow-md"
     >
       {/* Unread badge - positioned outside overflow container */}
       {unreadCount > 0 && (
@@ -38,7 +39,7 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
       )}
 
       {/* Product image */}
-      <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl bg-black/5">
+      <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-xl bg-accent/20">
         {product.image_url ? (
           <img
             src={product.image_url}
@@ -46,7 +47,7 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
             className="h-full w-full object-cover"
           />
         ) : (
-          <div className="flex h-full w-full items-center justify-center text-xl font-bold text-black/30">
+          <div className="flex h-full w-full items-center justify-center text-xl font-bold text-foreground/30">
             {product.brand?.charAt(0) || "?"}
           </div>
         )}
@@ -54,11 +55,11 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
 
       {/* Info */}
       <div className="flex-1 min-w-0">
-        <h3 className="text-sm font-bold text-black sm:text-base">
+        <h3 className="text-sm font-bold text-foreground sm:text-base">
           {product.name}
         </h3>
         <div className="mt-0.5 flex items-center gap-2">
-          <span className="flex items-center gap-1 text-xs text-black/50">
+          <span className="flex items-center gap-1 text-xs text-foreground/50">
             <Users className="h-3 w-3" />
             {memberCount} members
           </span>
@@ -70,13 +71,16 @@ export function GroupCard({ membership, memberCount, lastMessage }: GroupCardPro
           )}
         </div>
         {lastMessage && (
-          <p className={`mt-1 truncate text-xs ${unreadCount > 0 ? "font-medium text-black/70" : "text-black/40"}`}>
+          <p className={`mt-1 truncate text-xs ${unreadCount > 0 ? "font-medium text-foreground/70" : "text-foreground/40"}`}>
             {lastMessage.content}
           </p>
         )}
       </div>
 
-      <ChevronRight className="h-4 w-4 flex-shrink-0 text-black/30" />
+      <ChevronRight className="h-4 w-4 flex-shrink-0 text-foreground/30" />
     </Link>
   );
 }
+
+// Export memoized version to prevent unnecessary re-renders
+export const GroupCard = memo(GroupCardComponent);

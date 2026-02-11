@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Dialog,
@@ -14,6 +13,14 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { LOCATIONS } from "@/lib/constants";
 
 type IntentModalProps = {
   open: boolean;
@@ -97,7 +104,7 @@ export function IntentModal({
               <DialogTitle>Sign in to continue</DialogTitle>
               <DialogDescription>
                 You need to be logged in to join a buying group for{" "}
-                <span className="font-medium text-black">{productName}</span>.
+                <span className="font-medium text-foreground">{productName}</span>.
               </DialogDescription>
             </DialogHeader>
             <div className="flex flex-col gap-3 pt-2">
@@ -133,8 +140,8 @@ export function IntentModal({
                     onClick={() => setTimeline("immediately")}
                     className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${
                       timeline === "immediately"
-                        ? "border-black bg-black/5 text-black"
-                        : "border-black/10 text-black/60 hover:border-black/30"
+                        ? "border-foreground bg-foreground/5 text-foreground"
+                        : "border-foreground/10 text-foreground/60 hover:border-foreground/30"
                     }`}
                   >
                     Immediately
@@ -144,8 +151,8 @@ export function IntentModal({
                     onClick={() => setTimeline("1_2_weeks")}
                     className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${
                       timeline === "1_2_weeks"
-                        ? "border-black bg-black/5 text-black"
-                        : "border-black/10 text-black/60 hover:border-black/30"
+                        ? "border-foreground bg-foreground/5 text-foreground"
+                        : "border-foreground/10 text-foreground/60 hover:border-foreground/30"
                     }`}
                   >
                     1 - 2 weeks
@@ -155,8 +162,8 @@ export function IntentModal({
                     onClick={() => setTimeline("after_month")}
                     className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${
                       timeline === "after_month"
-                        ? "border-black bg-black/5 text-black"
-                        : "border-black/10 text-black/60 hover:border-black/30"
+                        ? "border-foreground bg-foreground/5 text-foreground"
+                        : "border-foreground/10 text-foreground/60 hover:border-foreground/30"
                     }`}
                   >
                     After a month
@@ -168,13 +175,20 @@ export function IntentModal({
               <div className="space-y-2">
                 <Label className="text-sm font-medium">
                   What&apos;s your city?{" "}
-                  <span className="text-black/40">(optional)</span>
+                  <span className="text-foreground/40">(optional)</span>
                 </Label>
-                <Input
-                  placeholder="e.g. Bangalore"
-                  value={city}
-                  onChange={(e) => setCity(e.target.value)}
-                />
+                <Select value={city} onValueChange={setCity}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select your city" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {LOCATIONS.map((loc) => (
+                      <SelectItem key={loc} value={loc}>
+                        {loc}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               <Button
@@ -188,7 +202,7 @@ export function IntentModal({
           </>
         ) : (
           <div className="flex items-center justify-center py-8">
-            <div className="h-6 w-6 animate-spin rounded-full border-2 border-black/20 border-t-black" />
+            <div className="h-6 w-6 animate-spin rounded-full border-2 border-foreground/20 border-t-foreground" />
           </div>
         )}
       </DialogContent>

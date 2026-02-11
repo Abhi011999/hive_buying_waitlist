@@ -214,13 +214,13 @@ function FAQItem({ faq, isOpen, onToggle }: { faq: typeof faqs[0], isOpen: boole
     <motion.div
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
-      className="border-b border-black/10"
+      className="border-b border-border"
     >
       <button
         onClick={onToggle}
         className="w-full flex items-start justify-between gap-4 py-6 text-left hover:opacity-70 transition-opacity"
       >
-        <span className="font-medium text-base sm:text-lg text-black pr-8">
+        <span className="font-medium text-base sm:text-lg text-foreground pr-8">
           {faq.question}
         </span>
         <motion.div
@@ -228,7 +228,7 @@ function FAQItem({ faq, isOpen, onToggle }: { faq: typeof faqs[0], isOpen: boole
           transition={{ duration: 0.3 }}
           className="flex-shrink-0 mt-1"
         >
-          <ChevronDown className="w-5 h-5 text-black" />
+          <ChevronDown className="w-5 h-5 text-foreground" />
         </motion.div>
       </button>
       
@@ -241,7 +241,7 @@ function FAQItem({ faq, isOpen, onToggle }: { faq: typeof faqs[0], isOpen: boole
             transition={{ duration: 0.3 }}
             className="overflow-hidden"
           >
-            <div className="pb-6 pr-12 text-sm sm:text-base text-gray-700 whitespace-pre-line leading-relaxed">
+            <div className="pb-6 pr-12 text-sm sm:text-base text-muted-foreground whitespace-pre-line leading-relaxed">
               {faq.answer}
             </div>
           </motion.div>
@@ -261,7 +261,7 @@ export default function FAQsPage() {
         <div className="mb-12 sm:mb-16">
           <Link 
             href="/" 
-            className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-black transition-colors mb-6"
+            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors mb-6"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -272,7 +272,7 @@ export default function FAQsPage() {
           <motion.h1
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl sm:text-5xl font-bold text-black mb-4"
+            className="text-4xl sm:text-5xl font-bold text-foreground mb-4"
           >
             Frequently Asked Questions
           </motion.h1>
@@ -281,7 +281,7 @@ export default function FAQsPage() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 }}
-            className="text-base sm:text-lg text-gray-600"
+            className="text-base sm:text-lg text-muted-foreground"
           >
             Everything you need to know about HiveBuying and group purchasing
           </motion.p>
@@ -311,15 +311,15 @@ export default function FAQsPage() {
           transition={{ delay: 0.3 }}
           className="mt-12 sm:mt-16 text-center rounded-xl p-8 sm:p-12"
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4">
+          <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-4">
             Still have questions?
           </h2>
-          <p className="text-gray-600 mb-6 text-base sm:text-lg">
+          <p className="text-muted-foreground mb-6 text-base sm:text-lg">
             Join our waitlist to stay updated and be the first to know when we launch
           </p>
           <Link
             href="/"
-            className="inline-flex items-center justify-center px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+            className="inline-flex items-center justify-center px-6 py-3 bg-primary text-primary-foreground rounded-lg border-2 border-primary hover:bg-background hover:text-primary transition-colors font-medium"
           >
             Join Waitlist
           </Link>
@@ -330,7 +330,7 @@ export default function FAQsPage() {
         quantityDesktop={200}
         quantityMobile={80}
         ease={80}
-        color={"#000000"}
+        color={"#1a2226"}
         refresh
       />
 

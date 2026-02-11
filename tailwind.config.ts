@@ -56,8 +56,7 @@ const config = {
           blue: "hsl(var(--brand-blue))",
         },
         theme: {
-          "yellow-bg": "hsl(var(--theme-yellow-bg))",
-          "blue-bg": "hsl(var(--theme-blue-bg))",
+          base: "hsl(var(--theme-base))",
         },
       },
       borderRadius: {

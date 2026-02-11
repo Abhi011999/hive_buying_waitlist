@@ -41,7 +41,7 @@ export default function SignupPage() {
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-black lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-12">
+      <div className="relative hidden bg-foreground lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-12">
         <div className="max-w-md space-y-8">
           <h2 className="text-2xl font-bold text-white">
             What our buyers say

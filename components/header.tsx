@@ -21,10 +21,10 @@ export default function Header() {
     <header
       className="fixed top-0 left-0 right-0 z-50 w-full px-6 py-3 sm:px-8 md:px-12 lg:px-16"
       style={{
-        background: "rgba(255, 255, 255, 0.7)",
+        background: "rgba(26, 34, 38, 0.95)",
         backdropFilter: "blur(20px) saturate(180%)",
         WebkitBackdropFilter: "blur(20px) saturate(180%)",
-        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
+        borderBottom: "1px solid rgba(185, 196, 200, 0.2)",
       }}
     >
       <div className="flex items-center justify-between gap-3">
@@ -33,6 +33,7 @@ export default function Header() {
             src="/hive-buying-black-logo.svg"
             alt="HiveBuying full text logo"
             className="h-8 w-auto object-contain sm:h-12"
+            style={{ filter: 'invert(1) brightness(2)' }}
           />
         </Link>
 
@@ -48,8 +49,8 @@ export default function Header() {
                 href={link.href}
                 className={`relative rounded-full px-4 py-1.5 text-sm font-medium transition ${
                   isActive
-                    ? "bg-black/10 text-black"
-                    : "text-black/60 hover:bg-black/5 hover:text-black/90"
+                    ? "bg-white/20 text-white"
+                    : "text-white/70 hover:bg-white/10 hover:text-white"
                 }`}
               >
                 {link.label}

@@ -33,10 +33,10 @@ export async function GET(
       );
     }
 
-    // Fetch messages
+    // Fetch messages with only required columns
     const { data: messages, error } = await supabase
       .from("group_messages")
-      .select("*")
+      .select("id, content, created_at, user_id")
       .eq("product_id", productId)
       .order("created_at", { ascending: true })
       .limit(100);
@@ -153,7 +153,7 @@ export async function POST(
         user_id: user.id,
         content: content.trim(),
       })
-      .select("*")
+      .select("id, content, created_at, user_id, product_id")
       .single();
 
     if (error) {

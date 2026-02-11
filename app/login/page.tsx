@@ -31,7 +31,7 @@ export default function LoginPage() {
             <img
               src="/hive-buying-black-logo.svg"
               alt="HiveBuying logo"
-              className="h-8 w-auto object-contain"
+              className="h-8 w-auto object-contain invert"
             />
           </Link>
         </div>
@@ -41,7 +41,7 @@ export default function LoginPage() {
           </div>
         </div>
       </div>
-      <div className="relative hidden bg-black lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-12">
+      <div className="relative hidden bg-neutral-900 lg:flex lg:flex-col lg:items-center lg:justify-center lg:p-12">
         <div className="max-w-md space-y-8">
           <h2 className="text-2xl font-bold text-white">
             What our buyers say
@@ -50,7 +50,7 @@ export default function LoginPage() {
             {testimonials.map((t, i) => (
               <div
                 key={i}
-                className="rounded-2xl bg-white/10 p-5 backdrop-blur-sm"
+                className="rounded-2xl bg-black/40 p-5 backdrop-blur-sm"
               >
                 <p className="text-sm leading-relaxed text-white/90">
                   &ldquo;{t.quote}&rdquo;

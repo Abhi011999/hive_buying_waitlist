@@ -24,42 +24,23 @@ export async function GET() {
 
   const productIds = memberships.map((m) => m.product_id);
 
-  // Get last read timestamps for each group
-  const { data: readStatuses } = await supabase
-    .from("group_read_status")
-    .select("product_id, last_read_at")
-    .eq("user_id", user.id)
-    .in("product_id", productIds);
-
-  const lastReadMap: Record<string, string> = {};
-  readStatuses?.forEach((rs) => {
-    lastReadMap[rs.product_id] = rs.last_read_at;
+  // Use RPC function to get unread counts efficiently in a single query
+  const { data: unreadData } = await supabase.rpc('get_unread_counts', {
+    p_user_id: user.id,
+    product_ids: productIds,
   });
 
-  // Count unread messages for each group
   const unreadCounts: Record<string, number> = {};
   let totalUnread = 0;
 
-  for (const pid of productIds) {
-    const lastRead = lastReadMap[pid];
-    
-    let query = supabase
-      .from("group_messages")
-      .select("*", { count: "exact", head: true })
-      .eq("product_id", pid)
-      .neq("user_id", user.id); // Don't count user's own messages
-
-    if (lastRead) {
-      query = query.gt("created_at", lastRead);
-    }
-
-    const { count } = await query;
-    const unreadCount = count || 0;
-    
-    if (unreadCount > 0) {
-      unreadCounts[pid] = unreadCount;
-      totalUnread += unreadCount;
-    }
+  if (unreadData) {
+    unreadData.forEach((item: any) => {
+      const count = Number(item.unread_count);
+      if (count > 0) {
+        unreadCounts[item.product_id] = count;
+        totalUnread += count;
+      }
+    });
   }
 
   return NextResponse.json({ unreadCounts, totalUnread });

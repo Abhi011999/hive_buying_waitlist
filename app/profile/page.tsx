@@ -86,11 +86,11 @@ export default async function ProfilePage() {
   ];
 
   return (
-    <main className="min-h-screen bg-white pb-20 sm:pb-0">
+    <main className="min-h-screen bg-background pb-20 sm:pb-0">
       <Header />
       <div className="mx-auto max-w-md px-4 pt-24 sm:px-6 sm:pt-28">
         {/* Profile card */}
-        <div className="flex flex-col items-center gap-4 rounded-2xl border-2 border-black/10 p-8">
+        <div className="flex flex-col items-center gap-4 rounded-2xl border-2 border-border p-8">
           {avatarUrl ? (
             <img
               src={avatarUrl}
@@ -99,20 +99,20 @@ export default async function ProfilePage() {
               referrerPolicy="no-referrer"
             />
           ) : (
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-black/10 text-xl font-bold text-black/60">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-accent/30 text-xl font-bold text-foreground/60">
               {initials}
             </div>
           )}
           <div className="text-center">
-            <h1 className="text-xl font-bold text-black">{displayName}</h1>
+            <h1 className="text-xl font-bold text-foreground">{displayName}</h1>
             {user.email && (
-              <p className="mt-1 text-sm text-black/50">{user.email}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{user.email}</p>
             )}
             {user.phone && (
-              <p className="mt-1 text-sm text-black/50">{user.phone}</p>
+              <p className="mt-1 text-sm text-muted-foreground">{user.phone}</p>
             )}
             {memberSince && (
-              <p className="mt-2 flex items-center justify-center gap-1 text-xs text-black/40">
+              <p className="mt-2 flex items-center justify-center gap-1 text-xs text-muted-foreground">
                 <Calendar className="h-3 w-3" />
                 Member since {memberSince}
               </p>
@@ -125,13 +125,13 @@ export default async function ProfilePage() {
           {stats.map((stat) => (
             <div
               key={stat.label}
-              className="flex flex-col items-center gap-1 rounded-xl border border-black/5 bg-black/[0.02] p-4"
+              className="flex flex-col items-center gap-1 rounded-xl border border-border bg-accent/10 p-4"
             >
               <div className={`rounded-full p-2 ${stat.color}`}>
                 <stat.icon className="h-4 w-4" />
               </div>
-              <span className="text-lg font-bold text-black">{stat.value}</span>
-              <span className="text-center text-[10px] leading-tight text-black/50">
+              <span className="text-lg font-bold text-foreground">{stat.value}</span>
+              <span className="text-center text-[10px] leading-tight text-muted-foreground">
                 {stat.label}
               </span>
             </div>
@@ -139,20 +139,20 @@ export default async function ProfilePage() {
         </div>
 
         {/* Quick links */}
-        <div className="mt-6 overflow-hidden rounded-2xl border border-black/10">
+        <div className="mt-6 overflow-hidden rounded-2xl border border-border">
           {menuItems.map((item, index) => (
             <Link
               key={item.href}
               href={item.href}
-              className={`flex items-center justify-between px-4 py-3.5 transition hover:bg-black/[0.02] ${
-                index !== menuItems.length - 1 ? "border-b border-black/5" : ""
+              className={`flex items-center justify-between px-4 py-3.5 transition hover:bg-accent/10 ${
+                index !== menuItems.length - 1 ? "border-b border-border" : ""
               }`}
             >
               <div className="flex items-center gap-3">
-                <item.icon className="h-5 w-5 text-black/40" />
-                <span className="text-sm font-medium text-black">{item.label}</span>
+                <item.icon className="h-5 w-5 text-muted-foreground" />
+                <span className="text-sm font-medium text-foreground">{item.label}</span>
               </div>
-              <ChevronRight className="h-4 w-4 text-black/30" />
+              <ChevronRight className="h-4 w-4 text-muted-foreground" />
             </Link>
           ))}
         </div>

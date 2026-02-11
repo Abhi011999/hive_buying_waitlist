@@ -37,8 +37,8 @@ export default function PrivacyPage() {
                 <h2 className="text-xl sm:text-2xl font-semibold mt-8 mb-4 text-foreground">1. Company Details</h2>
                 <ul className="list-none space-y-2 pl-0">
                   <li><strong>Name:</strong> HiveBuying</li>
-                  <li><strong>Website:</strong> <Link href="https://www.hivebuying.com" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">https://www.hivebuying.com</Link></li>
-                  <li><strong>Email:</strong> <Link href="mailto:support@hivebuying.com" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link></li>
+                  <li><strong>Website:</strong> <Link href="https://www.hivebuying.com" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">https://www.hivebuying.com</Link></li>
+                  <li><strong>Email:</strong> <Link href="mailto:support@hivebuying.com" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link></li>
                   <li><strong>Phone:</strong> +91 9026684646</li>
                   <li><strong>Address:</strong> 27th Main Road, HSR Layout, Bengaluru, Karnataka, India</li>
                 </ul>
@@ -163,7 +163,7 @@ export default function PrivacyPage() {
                   <li>Withdraw consent for marketing or promotional communication.</li>
                   <li>Opt out of cookies and targeted ads.</li>
                 </ul>
-                <p>Contact <Link href="mailto:support@hivebuying.com" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link> to exercise these rights. We respond within 30 days of verified requests.</p>
+                <p>Contact <Link href="mailto:support@hivebuying.com" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link> to exercise these rights. We respond within 30 days of verified requests.</p>
               </section>
 
               <section className="space-y-4">
@@ -214,7 +214,7 @@ export default function PrivacyPage() {
               <section className="space-y-4">
                 <h2 className="text-xl sm:text-2xl font-semibold mt-8 mb-4 text-foreground">14. Marketing and Communication</h2>
                 <p>We may send you updates on offers, group status, and new product deals via email or WhatsApp.</p>
-                <p>You can unsubscribe anytime using the opt-out link or by contacting <Link href="mailto:support@hivebuying.com" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link>.</p>
+                <p>You can unsubscribe anytime using the opt-out link or by contacting <Link href="mailto:support@hivebuying.com" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link>.</p>
                 <p>Marketing is always opt-in, not automatic.</p>
               </section>
 
@@ -233,7 +233,7 @@ export default function PrivacyPage() {
                 <h2 className="text-xl sm:text-2xl font-semibold mt-8 mb-4 text-foreground">16. Contact Us</h2>
                 <p>If you have questions, complaints, or requests about this Privacy Policy, contact us:</p>
                 <ul className="list-none space-y-2 pl-0">
-                  <li>📧 <strong>Email:</strong> <Link href="mailto:support@hivebuying.com" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link></li>
+                  <li>📧 <strong>Email:</strong> <Link href="mailto:support@hivebuying.com" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">support@hivebuying.com</Link></li>
                   <li>📞 <strong>Phone:</strong> +91 9026684646</li>
                   <li>🏢 <strong>Address:</strong> 27th Main Road, HSR Layout, Bengaluru, Karnataka, India</li>
                 </ul>
@@ -241,7 +241,7 @@ export default function PrivacyPage() {
                   <p><strong>Grievance Officer (India):</strong></p>
                   <ul className="list-none space-y-2 pl-0 mt-2">
                     <li><strong>Name:</strong> [To be appointed]</li>
-                    <li><strong>Email:</strong> <Link href="mailto:grievance@hivebuying.com" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">grievance@hivebuying.com</Link></li>
+                    <li><strong>Email:</strong> <Link href="mailto:grievance@hivebuying.com" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">grievance@hivebuying.com</Link></li>
                     <li><strong>Phone:</strong> +91 9026684646</li>
                   </ul>
                 </div>
@@ -249,7 +249,7 @@ export default function PrivacyPage() {
 
               <section className="space-y-4">
                 <h2 className="text-xl sm:text-2xl font-semibold mt-8 mb-4 text-foreground">17. Changes to This Policy</h2>
-                <p>We may update this Privacy Policy from time to time. The latest version will always be available at <Link href="https://www.hivebuying.com/privacy" className="text-black underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">https://www.hivebuying.com/privacy</Link>.</p>
+                <p>We may update this Privacy Policy from time to time. The latest version will always be available at <Link href="https://www.hivebuying.com/privacy" className="text-foreground underline underline-offset-2 transition-all duration-200 ease-linear hover:opacity-60">https://www.hivebuying.com/privacy</Link>.</p>
                 <p>Significant changes will be notified via email or in-app alerts. Your continued use of the platform after updates means you accept the revised terms.</p>
               </section>
             </div>

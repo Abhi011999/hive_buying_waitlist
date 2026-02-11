@@ -268,7 +268,7 @@ export function BrandGallery() {
             >
               <button
                 onClick={() => setShowAll(true)}
-                className="px-6 py-2.5 border border-gray-800 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+                className="px-6 py-2.5 border-2 border-primary rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
               >
                 View More
               </button>
@@ -284,7 +284,7 @@ export function BrandGallery() {
             >
               <button
                 onClick={() => setShowAll(false)}
-                className="px-6 py-2.5 border border-gray-800 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+                className="px-6 py-2.5 border-2 border-primary rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
               >
                 View Less
               </button>

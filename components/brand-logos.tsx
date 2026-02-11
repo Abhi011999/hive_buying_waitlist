@@ -72,7 +72,7 @@ export function BrandLogos() {
     return (
       <div
         key={index}
-        className={`flex items-center justify-center aspect-[16/9] p-1 sm:p-1.5 lg:p-2.5 border-gray-800 
+        className={`flex items-center justify-center aspect-[16/9] p-1 sm:p-1.5 lg:p-2.5 border-border 
         ${!isLastInRowMobile ? 'border-r' : 'border-r-0'} 
         ${!isLastRowMobile ? 'border-b' : 'border-b-0'} 
         ${!isLastInRowDesktop ? 'lg:border-r' : 'lg:border-r-0'} 
@@ -112,7 +112,7 @@ export function BrandLogos() {
       >
         <motion.div
           variants={itemVariants}
-        className="border border-gray-800 rounded-lg overflow-hidden"
+        className="border border-border rounded-lg overflow-hidden bg-white/60"
         >
           <div className="grid grid-cols-4 lg:grid-cols-7 gap-0">
             {initialBrands.map((brand, index) => renderBrandCell(brand, index, visibleCount))}
@@ -131,7 +131,7 @@ export function BrandLogos() {
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.3, delay: index * 0.03 }}
-                  className={`flex items-center justify-center aspect-[16/9] p-1 sm:p-1.5 lg:p-2.5 border-gray-800 
+                  className={`flex items-center justify-center aspect-[16/9] p-1 sm:p-1.5 lg:p-2.5 border-border 
                     ${!isLastInRowMobile ? 'border-r' : 'border-r-0'} 
                     ${!isLastRowMobile ? 'border-b' : 'border-b-0'} 
                     ${!isLastInRowDesktop ? 'lg:border-r' : 'lg:border-r-0'} 
@@ -162,7 +162,7 @@ export function BrandLogos() {
             >
               <button
                 onClick={() => setShowAll(true)}
-                className="px-6 py-2.5 border border-gray-800 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+                className="px-6 py-2.5 border-2 border-primary rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
               >
                 View More Brands
               </button>
@@ -178,7 +178,7 @@ export function BrandLogos() {
             >
               <button
                 onClick={() => setShowAll(false)}
-                className="px-6 py-2.5 border border-gray-800 rounded-lg text-sm font-medium bg-black text-white hover:bg-gray-800 transition-colors duration-200"
+                className="px-6 py-2.5 border-2 border-primary rounded-lg text-sm font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-colors duration-200"
               >
                 View Less
               </button>
