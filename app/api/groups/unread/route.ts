@@ -1,17 +1,15 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getSessionUser } from "@/lib/supabase/server";
 
 export async function GET() {
   try {
-    const supabase = await createClient();
-
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getSessionUser();
 
     if (!user) {
       return NextResponse.json({ unreadCounts: {}, totalUnread: 0 });
     }
+
+    const supabase = await createClient();
 
     // Get user's group memberships
     const { data: memberships, error: membershipError } = await supabase

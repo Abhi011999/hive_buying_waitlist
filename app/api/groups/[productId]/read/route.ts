@@ -1,20 +1,18 @@
 import { NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getSessionUser } from "@/lib/supabase/server";
 
 export async function POST(
   request: Request,
   { params }: { params: Promise<{ productId: string }> }
 ) {
   const { productId } = await params;
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  const user = await getSessionUser();
 
   if (!user) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
+
+  const supabase = await createClient();
 
   // Upsert the read status
   const { error } = await supabase

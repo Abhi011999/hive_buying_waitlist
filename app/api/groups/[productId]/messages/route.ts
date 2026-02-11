@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getSessionUser } from "@/lib/supabase/server";
 
 export async function GET(
   request: NextRequest,
@@ -7,16 +7,13 @@ export async function GET(
 ) {
   try {
     const { productId } = await params;
-    const supabase = await createClient();
-
-    // Check auth
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getSessionUser();
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const supabase = await createClient();
 
     // Check membership
     const { data: membership } = await supabase
@@ -103,16 +100,13 @@ export async function POST(
 ) {
   try {
     const { productId } = await params;
-    const supabase = await createClient();
-
-    // Check auth
-    const {
-      data: { user },
-    } = await supabase.auth.getUser();
+    const user = await getSessionUser();
 
     if (!user) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
+
+    const supabase = await createClient();
 
     // Check membership
     const { data: membership } = await supabase

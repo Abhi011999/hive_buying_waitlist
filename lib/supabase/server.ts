@@ -1,7 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { cache } from "react";
+import type { User } from "@supabase/supabase-js";
 
-export async function createClient() {
+/**
+ * Creates a Supabase client - cached per request.
+ * Multiple calls within the same request return the same client instance.
+ */
+export const createClient = cache(async () => {
   const cookieStore = await cookies();
 
   return createServerClient(
@@ -25,4 +31,15 @@ export async function createClient() {
       },
     }
   );
-}
+});
+
+/**
+ * Fast user retrieval using local JWT session - cached per request.
+ * Safe because middleware already validates with getUser() on every request.
+ * Uses React cache() to dedupe multiple calls within the same request.
+ */
+export const getSessionUser = cache(async (): Promise<User | null> => {
+  const supabase = await createClient();
+  const { data: { session } } = await supabase.auth.getSession();
+  return session?.user ?? null;
+});
