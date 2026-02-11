@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createClient } from "@/lib/supabase/client";
@@ -29,6 +29,8 @@ type IntentModalProps = {
   productName: string;
 };
 
+type Timeline = "immediately" | "1_2_weeks" | "after_month" | "";
+
 export function IntentModal({
   open,
   onOpenChange,
@@ -36,32 +38,32 @@ export function IntentModal({
   productName,
 }: IntentModalProps) {
   const router = useRouter();
-  const supabase = createClient();
-  const [timeline, setTimeline] = useState<"immediately" | "1_2_weeks" | "after_month" | "">("");
+  // Use useRef to avoid recreating client on every render - CRITICAL FIX
+  const supabaseRef = useRef(createClient());
+  const [timeline, setTimeline] = useState<Timeline>("");
   const [city, setCity] = useState("");
   const [loading, setLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
 
   useEffect(() => {
     if (open) {
-      supabase.auth.getUser().then(({ data: { user } }) => {
-        if (!user) {
-          setIsAuthenticated(false);
-        } else {
-          setIsAuthenticated(true);
-        }
+      supabaseRef.current.auth.getUser().then(({ data: { user } }) => {
+        setIsAuthenticated(!!user);
       });
     }
-  }, [open, supabase.auth]);
+  }, [open]);
 
-  const handleLogin = () => {
-    // Store return URL so user comes back after login
+  const handleLogin = useCallback(() => {
     const returnUrl = window.location.pathname;
     router.push(`/login?redirect=${encodeURIComponent(returnUrl)}`);
     onOpenChange(false);
-  };
+  }, [router, onOpenChange]);
 
-  const handleSubmit = async () => {
+  const handleTimelineSelect = useCallback((value: Timeline) => {
+    setTimeline(value);
+  }, []);
+
+  const handleSubmit = useCallback(async () => {
     if (!timeline) {
       toast.error("Please select a buying timeline");
       return;
@@ -84,7 +86,6 @@ export function IntentModal({
         throw new Error(data.error || "Failed to join group");
       }
 
-      const data = await res.json();
       toast.success(`You've joined the ${productName} group!`);
       onOpenChange(false);
       router.push(`/groups/${productId}`);
@@ -93,7 +94,7 @@ export function IntentModal({
     } finally {
       setLoading(false);
     }
-  };
+  }, [timeline, productId, city, productName, onOpenChange, router]);
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -137,7 +138,7 @@ export function IntentModal({
                 <div className="flex flex-col gap-2">
                   <button
                     type="button"
-                    onClick={() => setTimeline("immediately")}
+                    onClick={() => handleTimelineSelect("immediately")}
                     className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${
                       timeline === "immediately"
                         ? "border-foreground bg-foreground/5 text-foreground"
@@ -148,7 +149,7 @@ export function IntentModal({
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTimeline("1_2_weeks")}
+                    onClick={() => handleTimelineSelect("1_2_weeks")}
                     className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${
                       timeline === "1_2_weeks"
                         ? "border-foreground bg-foreground/5 text-foreground"
@@ -159,7 +160,7 @@ export function IntentModal({
                   </button>
                   <button
                     type="button"
-                    onClick={() => setTimeline("after_month")}
+                    onClick={() => handleTimelineSelect("after_month")}
                     className={`rounded-xl border-2 px-4 py-3 text-left text-sm font-medium transition ${
                       timeline === "after_month"
                         ? "border-foreground bg-foreground/5 text-foreground"

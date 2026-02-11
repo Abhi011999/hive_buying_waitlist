@@ -1,5 +1,5 @@
 import "./globals.css";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Figtree } from "next/font/google";
 import Script from "next/script";
 import { Toaster } from "@/components/ui/sonner";
@@ -8,6 +8,13 @@ import { BottomNav } from "@/components/bottom-nav";
 import { ClientProviders } from "@/components/client-providers";
 
 const FigtreeFont = Figtree({ subsets: ["latin"] });
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   title: "HiveBuying - Buy Together & Pay Less",

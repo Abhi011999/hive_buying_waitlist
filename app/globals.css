@@ -79,6 +79,20 @@
   * {
     @apply border-border;
   }
+  
+  /* Fix iOS 300ms tap delay - critical for mobile performance */
+  a,
+  button,
+  [role="button"],
+  input,
+  select,
+  textarea,
+  label,
+  [tabindex] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+  }
+  
   body {
     @apply bg-background text-foreground;
   }
