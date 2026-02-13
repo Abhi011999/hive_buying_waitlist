@@ -1,19 +1,18 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getSessionUser } from "@/lib/supabase/server";
 import Header from "@/components/header";
 import { GroupCard } from "@/components/group-card";
 
 export default async function MyGroupsPage() {
-  const supabase = await createClient();
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Fast local session read - no network call
+  const user = await getSessionUser();
 
   if (!user) {
     redirect("/login?redirect=/groups");
   }
+
+  const supabase = await createClient();
 
   // Fetch user's group memberships with product info
   const { data: memberships } = await supabase

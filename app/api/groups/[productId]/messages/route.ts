@@ -15,22 +15,7 @@ export async function GET(
 
     const supabase = await createClient();
 
-    // Check membership
-    const { data: membership } = await supabase
-      .from("group_members")
-      .select("id")
-      .eq("product_id", productId)
-      .eq("user_id", user.id)
-      .single();
-
-    if (!membership) {
-      return NextResponse.json(
-        { error: "You must be a group member to view messages" },
-        { status: 403 }
-      );
-    }
-
-    // Fetch messages with only required columns
+    // RLS automatically checks membership - one query instead of two!
     const { data: messages, error } = await supabase
       .from("group_messages")
       .select("id, content, created_at, user_id")
@@ -44,6 +29,24 @@ export async function GET(
         { error: "Failed to fetch messages" },
         { status: 500 }
       );
+    }
+
+    // If no messages returned, user might not be a member
+    // Optionally verify membership for better error message
+    if (messages.length === 0) {
+      const { data: membership } = await supabase
+        .from("group_members")
+        .select("id")
+        .eq("product_id", productId)
+        .eq("user_id", user.id)
+        .single();
+      
+      if (!membership) {
+        return NextResponse.json(
+          { error: "You must be a group member to view messages" },
+          { status: 403 }
+        );
+      }
     }
 
     // Fetch profiles for message authors
@@ -63,7 +66,6 @@ export async function GET(
       // For users without profile names, try to get from auth metadata
       for (const userId of userIds) {
         if (!profilesMap[userId]?.full_name) {
-          // Check if this is the current user - we can get their metadata
           if (userId === user.id) {
             const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split("@")[0];
             const avatar = user.user_metadata?.avatar_url || user.user_metadata?.picture;
@@ -108,21 +110,6 @@ export async function POST(
 
     const supabase = await createClient();
 
-    // Check membership
-    const { data: membership } = await supabase
-      .from("group_members")
-      .select("id")
-      .eq("product_id", productId)
-      .eq("user_id", user.id)
-      .single();
-
-    if (!membership) {
-      return NextResponse.json(
-        { error: "You must be a group member to post messages" },
-        { status: 403 }
-      );
-    }
-
     const body = await request.json();
     const { content } = body;
 
@@ -140,6 +127,7 @@ export async function POST(
       );
     }
 
+    // RLS automatically checks membership - one query instead of two!
     const { data, error } = await supabase
       .from("group_messages")
       .insert({
@@ -152,6 +140,15 @@ export async function POST(
 
     if (error) {
       console.error("Post message error:", error);
+      
+      // If RLS blocked this (user not a member), error code will be permission denied
+      if (error.code === '42501' || error.message.includes('policy')) {
+        return NextResponse.json(
+          { error: "You must be a group member to post messages" },
+          { status: 403 }
+        );
+      }
+      
       return NextResponse.json(
         { error: "Failed to post message" },
         { status: 500 }

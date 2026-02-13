@@ -7,6 +7,8 @@ import { ProductCard } from "@/components/product-card";
 import { HOME_APPLIANCES_SUBCATEGORIES } from "@/lib/constants";
 import { Tv, Wind, Refrigerator, WashingMachine, Home as HomeIcon } from "lucide-react";
 
+export const revalidate = 60; // Cache for 60 seconds
+
 type ProductImage = {
   id: string;
   image_url: string;

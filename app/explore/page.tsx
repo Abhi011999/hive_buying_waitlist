@@ -3,6 +3,8 @@ import { createClient } from "@/lib/supabase/server";
 import Header from "@/components/header";
 import { Car, Bike, Smartphone, Home as HomeIcon } from "lucide-react";
 
+export const revalidate = 60; // Cache for 60 seconds
+
 const iconMap: Record<string, React.ElementType> = {
   Car: Car,
   Bike: Bike,

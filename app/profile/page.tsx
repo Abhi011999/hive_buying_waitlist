@@ -1,18 +1,18 @@
 import { redirect } from "next/navigation";
-import { createClient } from "@/lib/supabase/server";
+import { createClient, getSessionUser } from "@/lib/supabase/server";
 import Header from "@/components/header";
 import Link from "next/link";
 import { Users, Calendar, MessageSquare, TrendingUp, ChevronRight, Settings, HelpCircle, LogOut } from "lucide-react";
 
 export default async function ProfilePage() {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  // Fast local session read - no network call
+  const user = await getSessionUser();
 
   if (!user) {
     redirect("/login?redirect=/profile");
   }
+
+  const supabase = await createClient();
 
   // Fetch user stats
   const { count: groupsJoined } = await supabase
