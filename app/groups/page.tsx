@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 import { createClient, getSessionUser } from "@/lib/supabase/server";
 import Header from "@/components/header";
 import { GroupCard } from "@/components/group-card";
+
+export const metadata: Metadata = {
+  title: "India’s Trusted Group Buying & Community Buying Platform",
+  description:
+    "We are a group buying company in India helping communities buy together and save more on every purchase. Simple, smart, and transparent.",
+};
 
 export default async function MyGroupsPage() {
   // Fast local session read - no network call

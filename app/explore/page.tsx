@@ -1,7 +1,14 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase/server";
 import Header from "@/components/header";
 import { Car, Bike, Smartphone, Home as HomeIcon } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "Community Buying Platform | Group Buying Company in India",
+  description:
+    "Buy products with others and pay less. We are a group buying company in India making community buying simple, fun, and affordable.",
+};
 
 export const revalidate = 60; // Cache for 60 seconds
 

@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { AuthForm } from "@/components/auth-form";
 
@@ -21,6 +22,12 @@ const testimonials = [
     avatar: "/face-2.webp",
   },
 ];
+
+export const metadata: Metadata = {
+  title: "India’s Trusted Group Buying & Community Buying Platform",
+  description:
+    "We are a group buying company in India helping communities buy together and save more on every purchase. Simple, smart, and transparent.",
+};
 
 export default function SignupPage() {
   return (

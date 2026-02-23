@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { createClient, getSessionUser } from "@/lib/supabase/server";
 import Header from "@/components/header";
 import Link from "next/link";
 import { Users, Calendar, MessageSquare, TrendingUp, ChevronRight, Settings, HelpCircle, LogOut } from "lucide-react";
+
+export const metadata: Metadata = {
+  title: "India’s Trusted Group Buying & Community Buying Platform",
+  description:
+    "We are a group buying company in India helping communities buy together and save more on every purchase. Simple, smart, and transparent.",
+};
 
 export default async function ProfilePage() {
   // Fast local session read - no network call
