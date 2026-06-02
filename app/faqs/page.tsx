@@ -206,7 +206,34 @@ Hivebuying is not asking sellers to reduce prices blindly. It offers them volume
 Group buying platforms like Hivebuying align incentives. Buyers get better prices. Sellers get reliable demand.
 
 That balance is why Hivebuying is sustainable, not a gimmick.`
-  }
+  },
+  {
+    id: 16,
+    question: "Why was HiveBuying created and what problem does it solve?",
+    answer: `The way people buy products is changing. Customers today are more informed, more price conscious, and more willing to explore smarter ways of purchasing expensive products. Whether someone is buying a car, a bike, a television, a laptop, or a home appliance, the buying journey has become longer and more research driven. Customers compare prices across stores, wait for offers, and often delay purchases because they feel they may not be getting the best value.
+
+HiveBuying was created to solve this problem through a simple but powerful idea. Instead of buying alone, people can buy together. When multiple buyers come together with similar purchase intent, sellers become more open to creating stronger pricing and better offers because they receive higher purchase volume and more serious buyers.
+
+HiveBuying is built around the belief that customers should not feel like they are negotiating alone. Traditional retail and ecommerce models focus on serving individuals one at a time, but HiveBuying introduces collective demand. As a group buying platform India can adopt at scale, HiveBuying creates opportunities for buyers and sellers to benefit together. Customers gain access to better value while stores and dealers receive more qualified demand and improved conversion rates.`
+  },
+  {
+    id: 17,
+    question: "Which product categories does HiveBuying support beyond automobiles?",
+    answer: `HiveBuying began with a strong focus on the automobile sector because buying vehicles is one of the largest purchasing decisions people make. Customers often spend months researching cars and bikes before making a decision. They visit dealerships, compare models, wait for festive offers, and still wonder whether they received the best deal. HiveBuying identified an opportunity to simplify this process through group buying.
+
+As customer interest grew, HiveBuying started seeing increasing demand outside automobiles. Customers began asking for support in categories such as electronics, gadgets, and home appliances. People purchasing laptops, televisions, refrigerators, washing machines, air conditioners, and smartphones often experience the same challenge. They spend time comparing multiple stores and waiting for discounts before making a final decision.
+
+Today HiveBuying works across automobiles, home appliances, and gadgets with the same mission of helping customers buy better through collective demand. Home appliances have become one of the strongest opportunities for group buying because households frequently make large purchases. Families compare stores, wait for seasonal offers, and postpone purchases because they want stronger value. The electronics and gadgets category has also shown strong demand, as customers are constantly searching for laptops, televisions, gaming devices, smartphones, and smart home products. All categories share the same reality: customers are looking for better ways to buy.`
+  },
+  {
+    id: 18,
+    question: "What is HiveBuying's vision for the future of buying?",
+    answer: `HiveBuying is not trying to become another marketplace. It is not a listing website and it is not trying to compete with ecommerce giants. Instead, HiveBuying focuses on becoming a trusted layer between customers and sellers. By understanding purchase intent and organizing buyer communities, HiveBuying aims to create outcomes that traditional models often miss.
+
+The idea of a community buying platform extends beyond pricing. It also creates transparency and confidence. Customers often feel uncertain when making expensive purchases. They wonder whether they selected the right product, paid the right amount, or missed a better opportunity elsewhere. When customers buy as part of a larger community, decisions become easier and more informed.
+
+Looking ahead, HiveBuying sees enormous potential across automobiles, home appliances, and gadgets. All these categories share one thing in common: customers are looking for better ways to buy. HiveBuying believes that the next generation of buying will be powered by communities. As a community buying platform and an emerging group buying platform India customers can rely on, HiveBuying is creating a model where customers no longer need to purchase alone. Whether someone is buying a car, upgrading home appliances, or selecting their next gadget, the opportunity to buy together creates stronger outcomes. The future of buying is becoming smarter, more connected, and more community driven.`
+  },
 ];
 
 function FAQItem({ faq, isOpen, onToggle }: { faq: typeof faqs[0], isOpen: boolean, onToggle: () => void }) {
