@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
-import { FaInstagram, FaXTwitter, FaYoutube } from "react-icons/fa6";
+import { FaInstagram, FaXTwitter, FaYoutube, FaLinkedinIn } from "react-icons/fa6";
 
 export default function Footer() {
   return (
@@ -43,6 +43,14 @@ export default function Footer() {
                 className="text-muted-foreground hover:text-foreground transition-colors duration-200"
               >
                 <FaInstagram size={18} />
+              </Link>
+              <Link
+                href="https://www.linkedin.com/company/hivebuying/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-muted-foreground hover:text-foreground transition-colors duration-200"
+              >
+                <FaLinkedinIn size={18} />
               </Link>
               <Link
                 href="https://www.youtube.com/@Hivebuying"
