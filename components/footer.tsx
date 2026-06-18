@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { containerVariants, itemVariants } from "@/lib/animation-variants";
@@ -54,6 +56,11 @@ export default function Footer() {
 
             {/* Legal Links */}
             <div className="flex gap-4 sm:gap-6">
+              <Link
+                href="/blog"
+                className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 underline underline-offset-2">
+                Blog
+              </Link>
               <Link
                 href="/faqs"
                 className="text-xs text-muted-foreground hover:text-foreground transition-colors duration-200 underline underline-offset-2">
